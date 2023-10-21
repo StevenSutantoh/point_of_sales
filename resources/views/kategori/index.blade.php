@@ -1,63 +1,115 @@
 @extends('layouts.app')
-@section('title', 'Kategori')
+
+@section('title')
+    Daftar Kategori
+@endsection
+
+@section('breadcrumb')
+    @parent
+    <li class="active">Daftar Kategori</li>
+@endsection
 
 @section('content')
-    <div class="container">
-        <div class="row">
-
-            <div class="col-md-9">
-                <div class="card">
-                    <div class="card-header">Category</div>
-                    <div class="card-body">
-                        <a href="{{ url('/kategori/create') }}" class="btn btn-success btn-sm" title="Add New category">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                        </a>
-
-                        <form method="GET" action="{{ url('/kategori') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
-                                <span class="input-group-append">
-                                    <button class="btn btn-secondary" type="submit">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
-                            </div>
-                        </form>
-
-                        <br/>
-                        <br/>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>#</th><th>Nama Kategori</th><th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($kategori as $item)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->name }}</td>
-                                        <td>
-                                            <a href="{{ url('/kategori/' . $item->id) }}" title="View Kategori"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/kategori/' . $item->id . '/edit') }}" title="Edit Kategori"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-
-                                            <form method="POST" action="{{ url('/kategori' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
-                                                {{ method_field('DELETE') }}
-                                                {{ csrf_field() }}
-                                                <button type="submit" class="btn btn-danger btn-sm" title="Delete category" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                            <div class="pagination-wrapper"> {!! $kategori->appends(['search' => Request::get('search')])->render() !!} </div>
-                        </div>
-
-                    </div>
-                </div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <button onclick="addForm('{{ route('kategori.store') }}')" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah</button>
+            </div>
+            <div class="box-body table-responsive">
+                <table class="table table-stiped table-bordered">
+                    <thead>
+                        <th width="5%">No</th>
+                        <th>Kategori</th>
+                        <th width="15%"><i class="fa fa-cog"></i></th>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
+</div>
+
+@includeIf('kategori.form')
 @endsection
+
+@push('scripts')
+<script>
+    let table;
+
+    $(function () {
+        table = $('.table').DataTable({
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            autoWidth: false,
+            ajax: {
+                url: '{{ route('kategori.data') }}',
+            },
+            columns: [
+                {data: 'DT_RowIndex', searchable: false, sortable: false},
+                {data: 'nama_kategori'},
+                {data: 'aksi', searchable: false, sortable: false},
+            ]
+        });
+
+        $('#modal-form').validator().on('submit', function (e) {
+            if (! e.preventDefault()) {
+                $.post($('#modal-form form').attr('action'), $('#modal-form form').serialize())
+                    .done((response) => {
+                        $('#modal-form').modal('hide');
+                        table.ajax.reload();
+                    })
+                    .fail((errors) => {
+                        alert('Tidak dapat menyimpan data');
+                        return;
+                    });
+            }
+        });
+    });
+
+    function addForm(url) {
+        $('#modal-form').modal('show');
+        $('#modal-form .modal-title').text('Tambah Kategori');
+
+        $('#modal-form form')[0].reset();
+        $('#modal-form form').attr('action', url);
+        $('#modal-form [name=_method]').val('post');
+        $('#modal-form [name=nama_kategori]').focus();
+    }
+
+    function editForm(url) {
+        $('#modal-form').modal('show');
+        $('#modal-form .modal-title').text('Edit Kategori');
+
+        $('#modal-form form')[0].reset();
+        $('#modal-form form').attr('action', url);
+        $('#modal-form [name=_method]').val('put');
+        $('#modal-form [name=nama_kategori]').focus();
+
+        $.get(url)
+            .done((response) => {
+                $('#modal-form [name=nama_kategori]').val(response.nama_kategori);
+            })
+            .fail((errors) => {
+                alert('Tidak dapat menampilkan data');
+                return;
+            });
+    }
+
+    function deleteData(url) {
+        if (confirm('Yakin ingin menghapus data terpilih?')) {
+            $.post(url, {
+                    '_token': $('[name=csrf-token]').attr('content'),
+                    '_method': 'delete'
+                })
+                .done((response) => {
+                    table.ajax.reload();
+                })
+                .fail((errors) => {
+                    alert('Tidak dapat menghapus data');
+                    return;
+                });
+        }
+    }
+</script>
+@endpush

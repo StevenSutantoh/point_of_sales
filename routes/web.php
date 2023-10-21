@@ -1,7 +1,10 @@
 <?php
 
-use App\Http\Controllers\KategoriController;
-use App\Http\Controllers\BarangController;
+use App\Http\Controllers\{
+    DashboardController,
+    KategoriController,
+    BarangController,
+};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +22,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => 'auth'], function() {
-    Route::get('/kategori/data', [KategoriController::class, 'data']);
-    Route::resource('/kategori', [KategoriController::class]);
-});
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/kategori/data', [KategoriController::class, 'data'])->name('kategori.data');
+    Route::resource('/kategori', KategoriController::class);
+
 
 

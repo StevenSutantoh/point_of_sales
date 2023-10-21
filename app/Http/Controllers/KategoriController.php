@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Kategori;
 
@@ -11,107 +10,108 @@ class KategoriController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $keyword = $request->get('search');
-        $perPage = 25;
+        return view('kategori.index');
+    }
 
-        if (!empty($keyword)) {
-            $kategori = Kategori::where('nama_kategori', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $kategori = Kategori::latest()->paginate($perPage);
-        }
+    public function data()
+    {
+        $kategori = Kategori::orderBy('id_kategori', 'desc')->get();
 
-        return view('kategori.index', compact('kategori'));
+        return datatables()
+            ->of($kategori)
+            ->addIndexColumn()
+            ->addColumn('aksi', function ($kategori) {
+                return '
+                <div class="btn-group">
+                    <button onclick="editForm(`'. route('kategori.update', $kategori->id_kategori) .'`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></button>
+                    <button onclick="deleteData(`'. route('kategori.destroy', $kategori->id_kategori) .'`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
+                </div>
+                ';
+            })
+            ->rawColumns(['aksi'])
+            ->make(true);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('kategori.create');
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        
-        $requestData = $request->all();
-        
-        Kategori::create($requestData);
+        $kategori = new Kategori();
+        $kategori->nama_kategori = $request->nama_kategori;
+        $kategori->save();
 
-        return redirect('kategori')->with('flash_message', 'category added!');
+        return response()->json('Data berhasil disimpan', 200);
     }
+
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $kategori = Kategori::findOrFail($id);
+        $kategori = Kategori::find($id);
 
-        return view('kategori.show', compact('kategori'));
+        return response()->json($kategori);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $kategori = Kategori::findOrFail($id);
-
-        return view('kategori.edit', compact('kategori'));
+        //
     }
     
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        
-        $requestData = $request->all();
-        
-        $kategori = Kategori::findOrFail($id);
-        $kategori->update($requestData);
+        $kategori = Kategori::find($id);
+        $kategori->nama_kategori = $request->nama_kategori;
+        $kategori->update();
 
-        return redirect('kategori')->with('flash_message', 'kategori updated!');
+        return response()->json('Data berhasil disimpan', 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        Kategori::destroy($id);
+        $kategori = Kategori::find($id);
+        $kategori->delete();
 
-        return redirect('kategori')->with('flash_message', 'kategori deleted!');
+        return response(null, 204);
     }
 }
