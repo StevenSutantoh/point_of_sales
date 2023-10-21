@@ -22,15 +22,20 @@
             </a>
         </li>
 
-        <li class="header">POINT OF SALES</li>
+        <li class="header">MAIN MENU</li>
         <li>
-            <a href="#">
+            <a href="kategori.index">
                 <i class="fa fa-cube"></i> <span>Kategori</span>
             </a>
         </li>
         <li>
             <a href="#">
-                <i class="fa fa-cubes"></i> <span>Produk</span>
+                <i class="fa fa-cubes"></i> <span>Barang</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fa fa-cubes"></i> <span>Stok Barang</span>
             </a>
         </li>
         <li>
