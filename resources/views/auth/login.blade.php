@@ -91,6 +91,13 @@
 <script src="{{ asset('AdminLTE-2/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <!-- iCheck -->
 <script src="{{ asset('AdminLTE-2/plugins/iCheck/icheck.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if($message = Session::get('failed'))
+    <script>
+        Swal.fire('{{ $message }}');
+    </script>
+@endif
 <script>
   $(function () {
     $('input').iCheck({
