@@ -3,6 +3,7 @@
 use App\Http\Controllers\{
     DashboardController,
     KategoriController,
+    LoginController,
     BarangController,
 };
 use Illuminate\Support\Facades\Route;
@@ -22,10 +23,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/login',[LoginController::class, 'index'])->name('login');
+Route::post('/login-proses',[LoginController::class, 'login_proses'])->name('login-proses');
 
-    Route::get('/kategori/data', [KategoriController::class, 'data'])->name('kategori.data');
-    Route::resource('/kategori', KategoriController::class);
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-
+Route::get('/kategori/data', [KategoriController::class, 'data'])->name('kategori.data');
+Route::resource('/kategori', KategoriController::class);
 
