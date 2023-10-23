@@ -32,6 +32,7 @@ Route::get('/register',[LoginController::class, 'register'])->name('register');
 Route::post('/register-proses',[LoginController::class, 'register_proses'])->name('register-proses');
 
 Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], function(){
+
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     
     Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori');
