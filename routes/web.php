@@ -25,9 +25,10 @@ Route::get('/', function () {
 
 Route::get('/login',[LoginController::class, 'index'])->name('login');
 Route::post('/login-proses',[LoginController::class, 'login_proses'])->name('login-proses');
+Route::get('/logout',[LoginController::class, 'logout'])->name('logout');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::get('/kategori/data', [KategoriController::class, 'data'])->name('kategori.data');
+Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori');
 Route::resource('/kategori', KategoriController::class);
 

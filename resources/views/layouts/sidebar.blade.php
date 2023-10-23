@@ -21,7 +21,6 @@
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
             </a>
         </li>
-
         <li class="header">MAIN MENU</li>
         <li>
             <a href="{{ route('kategori') }}">

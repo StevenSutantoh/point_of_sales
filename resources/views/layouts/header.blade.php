@@ -36,10 +36,11 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat"
+                  <a href="{{ route('logout') }}" class="btn btn-default btn-flat"
                     onclick="$('#logout-form').submit()">Sign out</a>
                 </div>
               </li>
+              
             </ul>
           </li>
         </ul>
