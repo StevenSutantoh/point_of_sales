@@ -27,7 +27,13 @@ Route::get('/login',[LoginController::class, 'index'])->name('login');
 Route::post('/login-proses',[LoginController::class, 'login_proses'])->name('login-proses');
 Route::get('/logout',[LoginController::class, 'logout'])->name('logout');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/register',[LoginController::class, 'register'])->name('register');
+Route::post('/register-proses',[LoginController::class, 'register_proses'])->name('register-proses');
+
+Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], function(){
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
+
 
 Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori');
 Route::resource('/kategori', KategoriController::class);

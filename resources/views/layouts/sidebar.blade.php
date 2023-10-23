@@ -17,7 +17,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li>
-            <a href="{{ route('dashboard') }}">
+            <a href="{{ route('admin.dashboard') }}">
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
             </a>
         </li>
@@ -80,8 +80,8 @@
         </li>
         <li class="header">SYSTEM</li>
         <li>
-            <a href="#">
-                <i class="fa fa-user"></i> <span>User</span>
+            <a href="{{ route('admin.index') }}" class="nav-link">
+                <i class="fa fa-user"></i> <span>Users</span>
             </a>
         </li>
         <li>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>{{ config('app.name') }} | Log in</title>
+  <title>{{ config('app.name') }} | Register</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -34,12 +34,19 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start your session</p>
+    <p class="login-box-msg">Halaman Register</p>
 
-    <form action="{{ route('login-proses') }}" method="post">
+    <form action="{{ route('register-proses') }}" method="post">
       @csrf
       <div class="form-group has-feedback">
-        <input type="email" name="email" class="form-control" placeholder="Email">
+        <input type="text" name="nama" class="form-control" placeholder="Nama Lengkap" value="{{ old('nama') }}">
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+      </div>
+      @error('email')
+        <small>{{ $message }}</small>
+      @enderror
+      <div class="form-group has-feedback">
+        <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       @error('email')
@@ -53,24 +60,14 @@
         <small>{{ $message }}</small>
       @enderror
       <div class="row">
-        <div class="col-xs-8">
-          <div class="checkbox icheck">
-            <label>
-              <input type="checkbox"> Remember Me
-            </label>
-          </div>
-        </div>
+        
         <!-- /.col -->
-        <div class="col-xs-4">
+        <div class="col-xs-12">
           <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
         </div>
         <!-- /.col -->
       </div>
     </form>
-
-    <a href="#">I forgot my password</a><br>
-    <a href="{{ route('register') }}" class="text-center">Register a new membership</a>
-
   </div>
   <!-- /.login-box-body -->
 </div>
