@@ -2,8 +2,9 @@
 
 use App\Http\Controllers\{
     DashboardController,
-    KategoriController,
     LoginController,
+    KategoriController,
+    UserController,
     BarangController,
 };
 use Illuminate\Support\Facades\Route;
@@ -31,10 +32,13 @@ Route::get('/register',[LoginController::class, 'register'])->name('register');
 Route::post('/register-proses',[LoginController::class, 'register_proses'])->name('register-proses');
 
 Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], function(){
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    
+    Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori');
+    Route::get('/user', [UserController::class, 'index'])->name('user');
 });
 
 
-Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori');
+
 Route::resource('/kategori', KategoriController::class);
 

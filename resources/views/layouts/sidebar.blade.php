@@ -23,7 +23,7 @@
         </li>
         <li class="header">MAIN MENU</li>
         <li>
-            <a href="{{ route('kategori') }}">
+            <a href="{{ route('admin.kategori') }}">
                 <i class="fa fa-cube"></i> <span>Kategori</span>
             </a>
         </li>
@@ -80,7 +80,7 @@
         </li>
         <li class="header">SYSTEM</li>
         <li>
-            <a href="{{ route('admin.index') }}" class="nav-link">
+            <a href="{{ route('admin.user') }}" class="nav-link">
                 <i class="fa fa-user"></i> <span>Users</span>
             </a>
         </li>
