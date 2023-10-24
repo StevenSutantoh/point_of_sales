@@ -36,6 +36,7 @@ Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], f
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     
     Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori');
+
     Route::get('/user', [UserController::class, 'index'])->name('user');
 });
 

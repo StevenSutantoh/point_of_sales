@@ -9,7 +9,7 @@
                 <div class="card">
                     <div class="card-header">Kategori</div>
                     <div class="card-body">
-                        <a href="{{ url('/kategori/create') }}" class="btn btn-success btn-sm" title="Add New category">
+                        <a href="{{ url('/kategori/create') }}" class="btn btn-success btn-sm" title="Add New Kategori">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>
 
@@ -30,19 +30,19 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Nama Kategori</th><th>Actions</th>
+                                        <th>ID</th><th>Nama Kategori</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($kategori as $item)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->id_kategori }}</td>
                                         <td>{{ $item->nama_kategori }}</td>
                                         <td>
-                                            <a href="{{ url('/kategori/' . $item->id) }}" title="View category"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('kategori' . $item->id . '/edit') }}" title="Edit Kategori"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                                            <a href="{{ url('/kategori/' . $item->id_kategori) }}" title="View Kategori"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                            <a href="{{ url('/kategori/' . $item->id_kategori . '/edit') }}" title="Edit Kategori"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
 
-                                            <form method="POST" action="{{ url('/kategori' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
+                                            <form method="POST" action="{{ url('/kategori' . '/' . $item->id_kategori) }}" accept-charset="UTF-8" style="display:inline">
                                                 {{ method_field('DELETE') }}
                                                 {{ csrf_field() }}
                                                 <button type="submit" class="btn btn-danger btn-sm" title="Delete Kategori" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
