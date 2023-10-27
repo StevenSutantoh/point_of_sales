@@ -38,12 +38,12 @@
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="{{ route('admin.supplier') }}">
                 <i class="fa fa-truck"></i> <span>Supplier</span>
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="{{ route('admin.customer') }}">
                 <i class="fa fa-id-card"></i> <span>Customer</span>
             </a>
         </li>
