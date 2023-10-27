@@ -31,11 +31,12 @@
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-
-  <!-- Google Font -->
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <!-- Google Font -->
+  @yield('css')
   <link rel="stylesheet" href="{{ asset('AdminLTE-2/https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic') }}">
 </head>
 <body class="hold-transition skin-yellow-light sidebar-mini">
@@ -47,6 +48,19 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+    @if (Session::has('error'))
+      <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa fa-danger"></i> Error !</h4>
+        {{Session::get('error')}}
+      </div>
+    @elseif(Session::has('success'))
+      <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa fa-check"></i> Success !</h4>
+        {{Session::get('success')}}
+      </div>
+    @endif
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -76,6 +90,7 @@
 
 <!-- jQuery 3 -->
 <script src="{{ asset('AdminLTE-2/bower_components/jquery/dist/jquery.min.js') }}"></script>
+{{-- <script src="{{ asset('AdminLTE-2/dist/js/jquery.js') }}"></script> --}}
 <!-- jQuery UI 1.11.4 -->
 <script src="{{ asset('AdminLTE-2/bower_components/jquery-ui/jquery-ui.min.js') }}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -84,9 +99,10 @@
 </script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{{ asset('AdminLTE-2/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+@yield('js')
 <!-- Morris.js charts -->
-<script src="{{ asset('AdminLTE-2/bower_components/raphael/raphael.min.js') }}"></script>
-<script src="{{ asset('AdminLTE-2/bower_components/morris.js/morris.min.js') }}"></script>
+{{-- <script src="{{ asset('AdminLTE-2/bower_components/raphael/raphael.min.js') }}"></script> --}}
+{{-- <script src="{{ asset('AdminLTE-2/bower_components/morris.js/morris.min.js') }}"></script> --}}
 <!-- Sparkline -->
 <script src="{{ asset('AdminLTE-2/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js') }}"></script>
 <!-- jvectormap -->
@@ -110,8 +126,9 @@
 <!-- AdminLTE App -->
 <script src="{{ asset('AdminLTE-2/dist/js/adminlte.min.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{ asset('AdminLTE-2/dist/js/pages/dashboard.js') }}"></script>
+{{-- <script src="{{ asset('AdminLTE-2/dist/js/pages/dashboard.js') }}"></script> --}}
 <!-- AdminLTE for demo purposes (This is only for demo purposes)-->
-<script src="{{ asset('AdminLTE-2/dist/js/pages/dashboard2.js') }}"></script>
+{{-- <script src="{{ asset('AdminLTE-2/dist/js/pages/dashboard2.js') }}"></script> --}}
+
 </body>
 </html>

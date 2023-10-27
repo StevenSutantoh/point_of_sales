@@ -28,7 +28,7 @@
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="{{ route('admin.barang') }}">
                 <i class="fa fa-cubes"></i> <span>Barang</span>
             </a>
         </li>
