@@ -34,10 +34,14 @@ Route::post('/register-proses',[LoginController::class, 'register_proses'])->nam
 Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], function(){
 
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-    
+    Route::get('/barang',[BarangController::class,'index'])->name('barang');
     Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori');
 
     Route::get('/user', [UserController::class, 'index'])->name('user');
+    Route::get('/tambah_barang',[BarangController::class,'view_create'])->name('view_tambah_barang');
+
+    Route::post('/tambah_barang_baru',[BarangController::class,'create'])->name('tambah_barang_baru');
+    
 });
 
 

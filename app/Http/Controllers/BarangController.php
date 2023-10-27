@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
+use Validator;
 
 class BarangController extends Controller
 {
@@ -23,19 +25,52 @@ class BarangController extends Controller
                 ->orWhere('kuantitas', 'LIKE', "%$keyword%")
                 ->orWhere('harga_jual', 'LIKE', "%$keyword%")
                 ->orWhere('stok', 'LIKE', "%$keyword%")
+                ->join('kategori as k','k.id_kategori','barang.id_kategori')
+                ->select('barang.*','k.nama_kategori')
                 ->latest()->paginate($perPage);
-        } else {
-            $barang = Barang::latest()->paginate($perPage);
+            } else {
+                $barang = Barang::select('barang.*','k.nama_kategori')
+                            ->join('kategori as k','k.id_kategori','barang.id_kategori')
+                            ->latest()
+                            ->paginate($perPage);
         }
+        $list_kategori = Kategori::all();
 
-        return view('barang.index', compact('barang'));
+        return view('barang.index', compact('barang','list_kategori'));
+    }
+
+    public function view_create(){
+        $list_kategori = Kategori::all();
+        return view('barang.create',compact('list_kategori'));
     }
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'id_kategori' => 'required',
+            'nama_barang' => 'required',
+            'id_supplier' => 'required',
+            'stok' => 'required',
+            'merk' => 'required',
+            'size' => 'required',
+            'harga_jual' => 'required',
+        ]);
+        if ($validator->fails()) {
+            // Handle the validation failure for the second field
+            return redirect()->back()->with('error',$validator->errors());
+        }
+        try {
+            Barang::create($data);
+        }
+        catch(Exception $e){
+            $error = $e->getMessage();
+            dd($error);
+            return redirect()->back()->with('error',$error);
+        }
+        return redirect()->back()->with('success','Berhasil menambahkan barang baru');
     }
 
     /**
