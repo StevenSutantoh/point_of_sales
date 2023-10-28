@@ -44,14 +44,14 @@ class CustomerController extends Controller
 
     public function show($id)
     {
-        $supplier = Customer::findOrFail($id);
+        $customer = Customer::findOrFail($id);
 
         return view('customer.show', compact('customer'));
     }
 
     public function edit($id)
     {
-        $supplier = Customer::findOrFail($id);
+        $customer = Customer::findOrFail($id);
 
         return view('customer.edit', compact('customer'));
     }
