@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('supplier', function (Blueprint $table) {
             $table->increments('id_supplier');
-            $table->string('nama');
+            $table->string('nama_supplier')->unique();
             $table->text('alamat')->nullable();
             $table->string('telepon');
             $table->timestamps();

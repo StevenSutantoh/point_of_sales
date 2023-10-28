@@ -18,7 +18,7 @@ class CustomerController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $customer = Customer::where('nama', 'LIKE', "%$keyword%")
+            $customer = Customer::where('nama_customer', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
             $customer = Customer::latest()->paginate($perPage);

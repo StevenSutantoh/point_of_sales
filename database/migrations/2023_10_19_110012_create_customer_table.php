@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('customer', function (Blueprint $table) {
             $table->increments('id_customer');
-            $table->string('nama');
+            $table->string('nama_customer')->unique();
             $table->text('alamat')->nullable();
             $table->string('telepon');
             $table->timestamps();

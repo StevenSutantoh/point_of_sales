@@ -18,7 +18,7 @@ class SupplierController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $supplier = Supplier::where('nama', 'LIKE', "%$keyword%")
+            $supplier = Supplier::where('nama_supplier', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
             $supplier = Supplier::latest()->paginate($perPage);
