@@ -33,11 +33,6 @@
             </a>
         </li>
         <li>
-            <a href="#">
-                <i class="fa fa-cubes"></i> <span>Stok Barang</span>
-            </a>
-        </li>
-        <li>
             <a href="{{ route('admin.supplier') }}">
                 <i class="fa fa-truck"></i> <span>Supplier</span>
             </a>
@@ -85,8 +80,8 @@
             </a>
         </li>
         <li>
-            <a href="#">
-                <i class="fa fa-cog"></i> <span>Pengaturan</span>
+            <a href="{{ route('admin.settings')}}">
+                <i class="fa fa-cog"></i><span>Pengaturan</span>
             </a>
         </li>
       </ul>
