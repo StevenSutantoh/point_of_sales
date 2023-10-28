@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pengeluaran', function (Blueprint $table) {
             $table->increments('id_pengeluaran');
+            $table->date('tanggal');
             $table->text('deskripsi')->nullable();
             $table->integer('nominal');
             $table->timestamps();

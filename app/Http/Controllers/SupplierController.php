@@ -19,6 +19,8 @@ class SupplierController extends Controller
 
         if (!empty($keyword)) {
             $supplier = Supplier::where('nama_supplier', 'LIKE', "%$keyword%")
+                ->orWhere('alamat', 'LIKE', "%$keyword%")
+                ->orWhere('telepon', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
             $supplier = Supplier::latest()->paginate($perPage);
