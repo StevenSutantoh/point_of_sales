@@ -67,10 +67,7 @@
         <!-- /.col -->
       </div>
     </form>
-
-    <a href="#">I forgot my password</a><br>
-    <a href="{{ route('register') }}" class="text-center">Register a new membership</a>
-
+    
   </div>
   <!-- /.login-box-body -->
 </div>

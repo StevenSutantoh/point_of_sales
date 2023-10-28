@@ -34,7 +34,8 @@ Route::get('/register',[LoginController::class, 'register'])->name('register');
 Route::post('/register-proses',[LoginController::class, 'register_proses'])->name('register-proses');
 
 Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], function(){
-
+    Route::resource('roles', RoleController::class);
+    
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/barang',[BarangController::class,'index'])->name('barang');
     Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori');
@@ -47,8 +48,8 @@ Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], f
 
     Route::post('/tambah_barang_baru',[BarangController::class,'create'])->name('tambah_barang_baru');
     
+    Route::get('settings',[UserController::class,'view_settings'])->name('settings');
 });
-
 
 
 Route::resource('/kategori', KategoriController::class);
