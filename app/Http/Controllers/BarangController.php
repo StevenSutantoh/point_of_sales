@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Http\Controllers\Controller;
 use DB;
-// use Spatie\Permission\Models\Role;
-// use Spatie\Permission\Models\Permission;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class BarangController extends Controller
 {
