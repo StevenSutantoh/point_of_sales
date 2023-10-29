@@ -66,4 +66,5 @@ Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], f
 
 
 Route::resource('/kategori', KategoriController::class);
-
+Route::resource('/supplier', SupplierController::class);
+Route::resource('/customer', CustomerController::class);
