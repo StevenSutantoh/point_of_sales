@@ -1,6 +1,6 @@
 <div class="form-group {{ $errors->has('tanggal') ? 'has-error' : ''}}">
     <label for="tanggal" class="control-label">{{ 'Tanggal' }}</label>
-    <input class="form-control" name="tanggal" type="date" id="tanggal" value="{{ isset($pengeluaran->tanggal) ? $pengeluaran->tanggal : ''}}" >
+    <input class="form-control" name="tanggal" type="datetime-local" id="tanggal" value="{{ isset($pengeluaran->tanggal) ? $pengeluaran->tanggal : ''}}" >
     {!! $errors->first('tanggal', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('deskripsi') ? 'has-error' : ''}}">

@@ -11,7 +11,7 @@ use App\Http\Controllers\{
     SupplierController,
     RoleController,
 };
-use App\Models\Pengeluaran;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,6 +46,7 @@ Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], f
     Route::get('/supplier', [SupplierController::class, 'index'])->name('supplier');
     Route::get('/customer', [CustomerController::class, 'index'])->name('customer');
     
+
     Route::get('/pengeluaran', [PengeluaranController::class, 'index'])->name('pengeluaran');
     Route::get('/user', [UserController::class, 'index'])->name('user');
     Route::get('/tambah_barang',[BarangController::class,'view_create'])->name('view_tambah_barang');
@@ -68,3 +69,4 @@ Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], f
 Route::resource('/kategori', KategoriController::class);
 Route::resource('/supplier', SupplierController::class);
 Route::resource('/customer', CustomerController::class);
+Route::resource('/pengeluaran', PengeluaranController::class);

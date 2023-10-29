@@ -30,13 +30,14 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Nama Pengeluaran</th><th>Actions</th>
+                                        <th>ID</th><th>Tanggal</th><th>Deskripsi</th><th>Nominal</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($pengeluaran as $item)
                                     <tr>
                                         <td>{{ $item->id_pengeluaran }}</td>
+                                        <td>{{ $item->tanggal }}</td>
                                         <td>{{ $item->deskripsi }}</td>
                                         <td>{{ $item->nominal }}</td>
                                         <td>

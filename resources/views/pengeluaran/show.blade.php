@@ -27,7 +27,15 @@
                                     <tr>
                                         <th>ID</th><td>{{ $pengeluaran->id_pengeluaran }}</td>
                                     </tr>
-                                    <tr><th> Nama Pengeluaran </th><td> {{ $pengeluaran->nama_pengeluaran }} </td></tr>
+                                    <tr>
+                                        <th>Tanggal</th><td>{{ $pengeluaran->tanggal }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th> Deskripsi </th><td> {{ $pengeluaran->deskripsi }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Nominal </th><td> {{ $pengeluaran->nominal }} </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
