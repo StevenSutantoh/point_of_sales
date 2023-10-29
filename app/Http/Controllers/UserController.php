@@ -6,25 +6,35 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Hash;
+use DB;
+use Arr;
 
 class UserController extends Controller
 {
-    public function index() : View {
+    // public function index(Request $request) {
         
-        $data = User::get();
+    //     $data = User::get();
 
-        return view('user.index',compact('data'))->with('i',($request->input('page',1) - 1) * 5);
+    //     return view('user.index',compact('data'))->with('i',($request->input('page',1) - 1) * 5);
+    // }
+    public function index(Request $request)
+    {
+        $data = User::latest()->paginate(5);
+  
+        return view('user.settings',compact('data'))
+            ->with('i', ($request->input('page', 1) - 1) * 5);
     }
-
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(): View
+    public function create(Request $request)
     {
         $roles = Role::pluck('name','name')->all();
-        return view('users.create',compact('roles'));
+        $data = User::get();
+        return view('user.create',compact('roles','data'))->with('i',($request->input('page',1) - 1) * 5);
     }
 
     /**
@@ -48,7 +58,7 @@ class UserController extends Controller
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
     
-        return redirect()->route('users.index')
+        return redirect()->route('user.settings')
                         ->with('success','User created successfully');
     }
 
@@ -58,10 +68,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id): View
+    public function show($id)
     {
         $user = User::find($id);
-        return view('users.show',compact('user'));
+        return view('user.show',compact('user'));
     }
 
     /**
@@ -70,13 +80,13 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id): View
+    public function edit($id)
     {
         $user = User::find($id);
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
     
-        return view('users.edit',compact('user','roles','userRole'));
+        return view('user.edit',compact('user','roles','userRole'));
     }
 
     /**
@@ -86,7 +96,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id): RedirectResponse
+    public function update(Request $request, $id)
     {
         $this->validate($request, [
             'name' => 'required',
@@ -108,7 +118,7 @@ class UserController extends Controller
     
         $user->assignRole($request->input('roles'));
     
-        return redirect()->route('users.index')
+        return redirect()->route('admin.settings')
                         ->with('success','User updated successfully');
     }
 
@@ -118,10 +128,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id): RedirectResponse
+    public function destroy($id)
     {
         User::find($id)->delete();
-        return redirect()->route('users.index')
+        return redirect()->route('admin.settings')
                         ->with('success','User deleted successfully');
     }
 

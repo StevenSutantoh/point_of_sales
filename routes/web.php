@@ -7,8 +7,8 @@ use App\Http\Controllers\{
     UserController,
     BarangController,
     CustomerController,
+    PengeluaranController,
     SupplierController,
-    PengeluaranController
 };
 use App\Models\Pengeluaran;
 use Illuminate\Support\Facades\Route;
@@ -35,8 +35,8 @@ Route::get('/logout',[LoginController::class, 'logout'])->name('logout');
 Route::get('/register',[LoginController::class, 'register'])->name('register');
 Route::post('/register-proses',[LoginController::class, 'register_proses'])->name('register-proses');
 
+Route::resource('roles', RoleController::class);
 Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], function(){
-    Route::resource('roles', RoleController::class);
     
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/barang',[BarangController::class,'index'])->name('barang');
@@ -51,7 +51,16 @@ Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], f
 
     Route::post('/tambah_barang_baru',[BarangController::class,'create'])->name('tambah_barang_baru');
     
-    Route::get('settings',[UserController::class,'view_settings'])->name('settings');
+    Route::get('settings',[UserController::class,'index'])->name('settings');
+    Route::get('create_user',[UserController::class,'create'])->name('create_user');
+    Route::get('show_user',[UserController::class,'show'])->name('show_user');
+    Route::get('edit_user/{id}',[UserController::class,'edit'])->name('edit_user');
+    Route::get('destroy_user',[UserController::class,'destroy'])->name('destroy_user');
+
+    Route::patch('update_user/{id}',[UserController::class,'update'])->name('update_user');
+    // Route::get();
+
+    Route::post('store_user',[UserController::class,'store'])->name('store_user');
 });
 
 
