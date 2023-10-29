@@ -59,7 +59,7 @@ class UserController extends Controller
         $user->assignRole($request->input('roles'));
     
         return redirect()->route('user.settings')
-                        ->with('success','User created successfully');
+                        ->with('success','Akun baru berhasil dibuat');
     }
 
     /**
@@ -119,7 +119,7 @@ class UserController extends Controller
         $user->assignRole($request->input('roles'));
     
         return redirect()->route('admin.settings')
-                        ->with('success','User updated successfully');
+                        ->with('success','Akun berhasil diubah');
     }
 
     /**
@@ -132,7 +132,11 @@ class UserController extends Controller
     {
         User::find($id)->delete();
         return redirect()->route('admin.settings')
-                        ->with('success','User deleted successfully');
+                        ->with('success','Akun berhasil dihapus');
     }
+
+
+
+    
 
 }

@@ -56,7 +56,7 @@ Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], f
     Route::get('create_user',[UserController::class,'create'])->name('create_user');
     Route::get('show_user/{id}',[UserController::class,'show'])->name('show_user');
     Route::get('edit_user/{id}',[UserController::class,'edit'])->name('edit_user');
-    Route::get('destroy_user/{id}',[UserController::class,'destroy'])->name('destroy_user');
+    Route::delete('destroy_user/{id}',[UserController::class,'destroy'])->name('destroy_user');
 
     Route::patch('update_user/{id}',[UserController::class,'update'])->name('update_user');
     // Route::get();
