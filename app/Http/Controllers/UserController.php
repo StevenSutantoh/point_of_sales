@@ -43,7 +43,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $this->validate($request, [
             'name' => 'required',
@@ -58,7 +58,7 @@ class UserController extends Controller
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
     
-        return redirect()->route('user.settings')
+        return redirect()->route('admin.settings')
                         ->with('success','Akun baru berhasil dibuat');
     }
 
