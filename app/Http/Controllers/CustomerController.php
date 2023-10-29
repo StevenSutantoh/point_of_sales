@@ -19,6 +19,8 @@ class CustomerController extends Controller
 
         if (!empty($keyword)) {
             $customer = Customer::where('nama_customer', 'LIKE', "%$keyword%")
+                ->orWhere('alamat', 'LIKE', "%$keyword%")
+                ->orWhere('telepon', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
             $customer = Customer::latest()->paginate($perPage);

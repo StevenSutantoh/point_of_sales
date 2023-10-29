@@ -7,9 +7,10 @@ use App\Http\Controllers\{
     UserController,
     BarangController,
     CustomerController,
+    PengeluaranController,
     SupplierController,
-    RoleController,
 };
+use App\Models\Pengeluaran;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,6 +45,7 @@ Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], f
     Route::get('/supplier', [SupplierController::class, 'index'])->name('supplier');
     Route::get('/customer', [CustomerController::class, 'index'])->name('customer');
     
+    Route::get('/pengeluaran', [PengeluaranController::class, 'index'])->name('pengeluaran');
     Route::get('/user', [UserController::class, 'index'])->name('user');
     Route::get('/tambah_barang',[BarangController::class,'view_create'])->name('view_tambah_barang');
 
