@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('barang', function (Blueprint $table) {
             $table->increments('id_barang');
-            $table->bigInteger('id_kategori');
+            $table->unsignedInteger('id_kategori');
             $table->integer('id_stok');
             $table->string('nama_barang')->unique();
             $table->string('merk')->nullable();
@@ -21,10 +21,9 @@ return new class extends Migration
             $table->integer('harga_jual');
             $table->integer('stok');
             $table->timestamps();
-            
             $table->foreign('id_kategori')
-                  ->references('kategori')
-                  ->on('id_kategori')
+                  ->references('id_kategori')
+                  ->on('kategori')
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
         });
