@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','List Barang')
+@section('title','List Pembelian')
 
 @section('css') 
   <link rel="stylesheet" href="{{asset('AdminLTE-2/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
@@ -12,8 +12,8 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="row">
-                    <a href="{{route('admin.view_tambah_barang')}}" class="btn btn-primary">
-                        Tambah Barang
+                    <a href="{{route('pembelian.create')}}" class="btn btn-primary">
+                        Tambah Pembelian
                     </a>
                 </div>
                 <div class="row">
@@ -29,23 +29,25 @@
                                 <th>#</th>
                                 <th>Nama Barang</th>
                                 <th>Supplier</th>
-                                <th>Kategori</th>
-                                <th>Stock</th>
-                                <th>Merk</th>
-                                <th>Harga Beli</th>
+                                <th>Tanggal</th>
+                                <th>Kuantitas</th>
+                                <th>Total Pembelian</th>
+                                <th>Metode Pembayaran</th>
+                                <th>Invoice dibuat</th>
                             </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                @foreach ($barang as $item)
+                                @foreach ($list_pembelian as $item)
                                     <tr>
                                         <td>{{$i}}</td>
                                         <td>{{$item->nama_barang}}</td>
-                                        <td>{{$item->id_supplier}}</td>
-                                        <td>{{$item->nama_kategori}}</td>
-                                        <td>{{$item->stok}}</td>
-                                        <td>{{$item->merk}}</td>
-                                        <td>{{$item->harga_jual}}</td>
+                                        <td>{{$item->nama}}</td>
+                                        <td>{{$item->tanggal}}</td>
+                                        <td>{{$item->kuantitas}}</td>
+                                        <td>{{$item->total_pembelian}}</td>
+                                        <td>{{$item->metode_pembayaran}}</td>
+                                        <td>{{$item->created_at}}</td>
                                     </tr>
                                     <?php $i++; ?>
                                 @endforeach

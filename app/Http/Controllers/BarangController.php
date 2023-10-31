@@ -38,7 +38,7 @@ class BarangController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $barang = Barang::where('id_kategori', 'LIKE', "%$keyword%")
+            $barang = Barang::where('nama_kategori', 'LIKE', "%$keyword%")
                 ->orWhere('id_stok', 'LIKE', "%$keyword%")
                 ->orWhere('nama_barang', 'LIKE', "%$keyword%")
                 ->orWhere('merk', 'LIKE', "%$keyword%")

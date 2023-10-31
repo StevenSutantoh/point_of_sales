@@ -10,6 +10,7 @@ use App\Http\Controllers\{
     PengeluaranController,
     SupplierController,
     RoleController,
+    PembelianController,
 };
 
 use Illuminate\Support\Facades\Route;
@@ -36,7 +37,6 @@ Route::get('/logout',[LoginController::class, 'logout'])->name('logout');
 Route::get('/register',[LoginController::class, 'register'])->name('register');
 Route::post('/register-proses',[LoginController::class, 'register_proses'])->name('register-proses');
 
-Route::resource('roles', RoleController::class);
 Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], function(){
     
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
@@ -70,3 +70,6 @@ Route::resource('/kategori', KategoriController::class);
 Route::resource('/supplier', SupplierController::class);
 Route::resource('/customer', CustomerController::class);
 Route::resource('/pengeluaran', PengeluaranController::class);
+Route::resource('roles', RoleController::class);
+Route::resource('pembelian', PembelianController::class);
+Route::resource('penjualan', PenjualanController::class);

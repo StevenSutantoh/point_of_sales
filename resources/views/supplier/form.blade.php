@@ -1,7 +1,7 @@
-<div class="form-group {{ $errors->has('nama_supplier') ? 'has-error' : ''}}">
-    <label for="nama_supplier" class="control-label">{{ 'Nama Supplier' }}</label>
-    <input class="form-control" name="nama_supplier" type="text" id="nama_supplier" value="{{ isset($supplier->nama_supplier) ? $supplier->nama_supplier : ''}}" >
-    {!! $errors->first('nama_supplier', '<p class="help-block">:message</p>') !!}
+<div class="form-group {{ $errors->has('nama') ? 'has-error' : ''}}">
+    <label for="nama" class="control-label">{{ 'Nama Supplier' }}</label>
+    <input class="form-control" name="nama" type="text" id="nama" value="{{ isset($supplier->nama) ? $supplier->nama : ''}}" >
+    {!! $errors->first('nama', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('alamat') ? 'has-error' : ''}}">
     <label for="alamat" class="control-label">{{ 'Alamat' }}</label>
