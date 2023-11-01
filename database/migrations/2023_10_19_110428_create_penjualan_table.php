@@ -13,14 +13,17 @@ return new class extends Migration
     {
         Schema::create('penjualan', function (Blueprint $table) {
             $table->increments('id_penjualan');
-            $table->integer('id_customer');
-            $table->integer('id_barang');
-            $table->date('tanggal');
-            $table->string('nama_barang');
-            $table->integer('kuantitas');
-            $table->integer('harga_jual');
-            $table->integer('subtotal');
+            $table->string('tanggal',50);
+            $table->bigInteger('id_customer');
+            $table->integer('total_penjualan');
+            $table->string('metode_pembayaran');
+            $table->string('status_pembayaran');
             $table->timestamps();
+            $table->foreign('id_customer')
+                  ->references('id_customer')
+                  ->on('customer')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
         });
     }
 

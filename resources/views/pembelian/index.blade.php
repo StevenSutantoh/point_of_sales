@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','List Barang')
+@section('title','List Pembelian')
 
 @section('css') 
   <link rel="stylesheet" href="{{asset('AdminLTE-2/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
@@ -12,8 +12,8 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="row">
-                    <a href="{{route('admin.view_tambah_barang')}}" class="btn btn-primary">
-                        Tambah Barang
+                    <a href="{{route('pembelian.create')}}" class="btn btn-primary">
+                        Tambah Pembelian
                     </a>
                 </div>
                 <div class="row">
@@ -26,29 +26,27 @@
                           <table id="table_barang" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Nama Barang</th>
-                                <th>Kategori</th>
-                                <th>Stok</th>
-                                <th>Merk</th>
-                                <th>Size</th>
-                                <th>Harga Beli</th>
-                                <th>Aksi</th>
+                                <th>ID</th>
+                                <th>Tanggal</th>
+                                <th>Total Pembelian</th>
+                                <th>Metode Pembayaran</th>
+                                <th>Invoice dibuat</th>
+                                <th>Aksi Detail</th>
                             </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                @foreach ($barang as $item)
+                                @foreach ($list_pembelian as $item)
                                     <tr>
-                                        <td>{{$i}}</td>
-                                        <td>{{$item->nama_barang}}</td>
-                                        <td>{{$item->nama_kategori}}</td>
-                                        <td>{{$item->stok}}</td>
-                                        <td>{{$item->merk}}</td>
-                                        <td>{{$item->size}}</td>
-                                        <td>{{$item->harga_jual}}</td>
+                                        <td>{{$item->id_pembelian}}</td>
+                                        <td>{{$item->tanggal}}</td>
+                                        <td>{{$item->total_pembelian}}</td>
+                                        <td>{{$item->metode_pembayaran}}</td>
+                                        <td>{{$item->created_at}}</td>
                                         <td>
-                                            <a href="{{route('admin.add_size')}}" class="btn btn-primary">Tambah Size</a>
+                                            <a class="btn btn-primary" href="{{ route('pembelian.show',$item->id_pembelian) }}">Lihat</a>
+                                            <a class="btn btn-success" href="{{ route('admin.pembelian.add',$item->id_pembelian)}}">Tambah</a>
+                                            <a class="btn btn-warning" href="{{ route('pembelian.edit',$item->id_pembelian)}}">Edit</a>
                                         </td>
                                     </tr>
                                     <?php $i++; ?>

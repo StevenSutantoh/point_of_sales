@@ -28,7 +28,7 @@
                                         <th>ID</th><td>{{ $customer->id_customer }}</td>
                                     </tr>
                                     <tr>
-                                        <th> Nama Customer </th><td> {{ $customer->nama_customer }} </td>
+                                        <th> Nama Customer </th><td> {{ $customer->nama }} </td>
                                     </tr>
                                     <tr>
                                         <th>Alamat</th><td>{{ $customer->alamat }}</td>

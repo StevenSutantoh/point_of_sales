@@ -38,7 +38,7 @@ class BarangController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $barang = Barang::where('id_kategori', 'LIKE', "%$keyword%")
+            $barang = Barang::where('nama_kategori', 'LIKE', "%$keyword%")
                 ->orWhere('id_stok', 'LIKE', "%$keyword%")
                 ->orWhere('nama_barang', 'LIKE', "%$keyword%")
                 ->orWhere('merk', 'LIKE', "%$keyword%")
@@ -46,7 +46,7 @@ class BarangController extends Controller
                 ->orWhere('harga_jual', 'LIKE', "%$keyword%")
                 ->orWhere('stok', 'LIKE', "%$keyword%")
                 ->join('kategori as k','k.id_kategori','barang.id_kategori')
-                ->select('barang.*','k.nama_kategori')
+                ->select('barang.*','k.nama_kategori','s.nama')
                 ->latest()->paginate($perPage);
             } else {
                 $barang = Barang::select('barang.*','k.nama_kategori')
@@ -93,6 +93,9 @@ class BarangController extends Controller
         return redirect()->back()->with('success','Berhasil menambahkan barang baru');
     }
 
+    public function view_add_size(){
+        
+    }
     /**
      * Store a newly created resource in storage.
      */
