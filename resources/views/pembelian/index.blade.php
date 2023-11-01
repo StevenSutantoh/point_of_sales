@@ -28,6 +28,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Tanggal</th>
+                                <th>Supplier</th>
                                 <th>Total Pembelian</th>
                                 <th>Metode Pembayaran</th>
                                 <th>Invoice dibuat</th>
@@ -40,6 +41,7 @@
                                     <tr>
                                         <td>{{$item->id_pembelian}}</td>
                                         <td>{{$item->tanggal}}</td>
+                                        <td>{{$item->nama}}</td>
                                         <td>{{$item->total_pembelian}}</td>
                                         <td>{{$item->metode_pembayaran}}</td>
                                         <td>{{$item->created_at}}</td>

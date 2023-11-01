@@ -72,6 +72,8 @@ Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], f
     
     // Pembelian Additional
     Route::get('add/{id}',[PembelianController::class,'add'])->name('pembelian.add');
+    Route::post('add_item',[PembelianController::class,'add_item'])->name('pembelian.add_item');
+    Route::get('hapus_detail/{id_detail}',[PembelianController::class,'del_item'])->name('pembelian.hapus_detail');
 });
 
 
