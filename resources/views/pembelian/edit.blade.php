@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Detail Pembelian')
+@section('title','Edit Detail Pembelian')
 
 @section('css') 
   <link rel="stylesheet" href="{{asset('AdminLTE-2/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
@@ -15,7 +15,6 @@
                     <h2> Pembelian ID : #{{$pembelian[0]->id_pembelian}}</h2>
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-success" href="{{ route('admin.pembelian.add',$pembelian[0]->id_pembelian) }}"> Tambah Item</a>
                     <a class="btn btn-primary" href="{{ route('pembelian.index') }}"> Kembali</a>
                 </div>
             </div>
@@ -23,25 +22,27 @@
         
         
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="col-xs-6 col-sm-6 col-md-6">
                 <div class="form-group">
                     <strong>Tanggal :</strong>
                     {{ $pembelian[0]->tanggal }}
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="col-xs-6 col-sm-6 col-md-6">
                 <div class="form-group">
                     <strong>Total pembelian :</strong>
-                    {{ $pembelian[0]->total_pembelian }}
+                    Rp. {{ number_format($pembelian[0]->total_pembelian) }}
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="col-xs-6 col-sm-6 col-md-6">
                 <div class="form-group">
-                    <strong>Metode Pembayaran :</strong>
-                    {{ $pembelian[0]->metode_pembayaran }}
+                    <strong>
+                        Metode Pembayaran :
+                        {{ strtoupper($pembelian[0]->metode_pembayaran) }}
+                    </strong>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="col-xs-6 col-sm-6 col-md-6">
                 <div class="form-group">
                     <strong>Tercatat :</strong>
                     {{ $pembelian[0]->created_at }}
@@ -59,6 +60,7 @@
                         <th>Kuantitas</th>
                         <th>Harga Beli</th>
                         <th>Total</th>
+                        <th>Aksi</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -69,6 +71,7 @@
                                 <td>{{$item->kuantitas}}</td>
                                 <td>Rp. {{number_format($item->harga_beli)}}</td>
                                 <td>Rp. {{number_format($item->kuantitas * $item->harga_beli)}}</td>
+                                <td><a href="{{route('admin.pembelian.hapus_detail',$item->id_detail_pembelian)}}" class="btn btn-danger">Hapus Item</a></td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -83,7 +86,10 @@
 @section('js')
     <script>
         $(function () {
-            $('#table_pembelian').DataTable()
+            $('#table_pembelian').DataTable([
+                "searching" : false,
+                "lengthChange" : false
+            ])
         })
     </script>
     <script src="{{asset('AdminLTE-2/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>

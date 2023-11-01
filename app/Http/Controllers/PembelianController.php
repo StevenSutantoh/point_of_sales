@@ -44,8 +44,7 @@ class PembelianController extends Controller
                 ->latest()->paginate($perPage);
             } else {
                 $list_pembelian = Pembelian:: 
-                              join('detail_pembelians as dp','dp.id_pembelian','pembelian.id_pembelian')
-                            ->join('supplier as s','s.id_supplier','pembelian.id_supplier')
+                              join('supplier as s','s.id_supplier','pembelian.id_supplier')
                             ->latest('pembelian.created_at')
                             ->paginate($perPage);
         }
@@ -107,6 +106,9 @@ class PembelianController extends Controller
                 'kuantitas' => $data['kuantitas'],
                 'harga_beli' => $data['harga_beli'],
             ]);
+            Barang::where('id_barang',$data['id_barang'])->update([
+                'stok' => DB::raw('stok + '.$data['kuantitas']),
+            ]);
             DB::commit();
         }
         catch(Exception $e){
@@ -130,13 +132,64 @@ class PembelianController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $pembelian = Pembelian::join('detail_pembelians as dp','dp.id_pembelian','pembelian.id_pembelian')
+                        ->join('supplier as s','s.id_supplier','pembelian.id_supplier')
+                        ->join('barang as b','b.id_barang','dp.id_barang')
+                        ->where('dp.id_pembelian',$id)
+                        ->get();
+        return view('pembelian.edit',compact('pembelian'));
     }
      /**
      * Show the form for editing the specified resource.
      */
     public function add(string $id)
     {
-        
+        $pembelian = Pembelian::join('detail_pembelians as dp','dp.id_pembelian','pembelian.id_pembelian')
+                        ->join('supplier as s','s.id_supplier','pembelian.id_supplier')
+                        ->join('barang as b','b.id_barang','dp.id_barang')
+                        ->where('dp.id_pembelian',$id)->get();
+        $list_barang = Barang::orderBy('nama_barang','ASC')->get();
+        $arr = array(); 
+        foreach($list_barang as $barang){
+            $arr[$barang->id_barang] = $barang->nama_barang.' - '.$barang->merk.' ['.$barang->size.']';
+        }
+        $list_barang = $arr;
+        return view('pembelian.add_item',compact('list_barang','pembelian'));
+    }
+    public function add_item(Request $request){
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'id_pembelian' => 'required',
+            'id_barang' => 'required',
+            'kuantitas' => 'required',
+            'harga_beli' => 'required',
+        ]);
+        DetailPembelian::create($data);
+        Pembelian::where('id_pembelian',$data['id_pembelian'])->update([
+            'total_pembelian' => DB::raw('total_pembelian + '.($data['kuantitas'] * $data['harga_beli']))
+        ]);
+        Barang::where('id_barang',$data['id_barang'])->update([
+            'stok' => DB::raw('stok + '.$data['kuantitas']),
+        ]);
+        return redirect()->back()->with('success','Pembelian berhasil ditambah');
+    }
+
+    public function del_item($id_detail){
+        try {
+            $detail_pembelian = DetailPembelian::where('id_detail_pembelian',$id_detail)->first();
+            DetailPembelian::where('id_detail_pembelian',$id_detail)->delete();
+            Pembelian::where('id_pembelian',$detail_pembelian['id_pembelian'])->update([
+                'total_pembelian' => DB::raw('total_pembelian - '.($detail_pembelian['kuantitas'] * $detail_pembelian['harga_beli']))
+            ]);
+            Barang::where('id_barang',$detail_pembelian['id_barang'])->update([
+                'stok' => DB::raw('stok - '.$detail_pembelian['kuantitas']),
+            ]);
+            DB::commit();
+        }
+        catch(Exception $e){
+            DB::rollback();
+            return redirect()->back()->with('error',$e->getMessage);
+        }
+        return redirect()->back()->with('success','Berhasil menghapus item pembelian');
     }
 }
