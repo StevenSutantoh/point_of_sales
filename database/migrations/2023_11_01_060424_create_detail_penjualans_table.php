@@ -14,11 +14,20 @@ return new class extends Migration
         Schema::create('detail_penjualans', function (Blueprint $table) {
             $table->increments('id_detail_penjualan');
             $table->bigInteger('id_penjualan');
-            $table->bigInteger('id_customer');
             $table->bigInteger('id_barang');
             $table->integer('kuantitas');
             $table->integer('harga_jual');
             $table->timestamps();
+            $table->foreign('id_penjualan')
+                  ->references('id_penjualan')
+                  ->on('penjualan')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
+            $table->foreign('id_barang')
+                  ->references('id_barang')
+                  ->on('barang')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
         });
     }
 

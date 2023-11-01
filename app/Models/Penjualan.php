@@ -11,5 +11,5 @@ class Penjualan extends Model
 
     protected $table = 'penjualan';
     protected $primaryKey = 'id_penjualan';
-    protected $fillable = ['tanggal' ,'total_penjualan' ,'metode_pembayaran' ,'status_pembayaran'];
+    protected $fillable = ['tanggal','id_customer' ,'total_penjualan' ,'metode_pembayaran' ,'status_pembayaran'];
 }

@@ -42,6 +42,9 @@ Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], f
     
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/barang',[BarangController::class,'index'])->name('barang');
+    Route::get('/add_size',[BarangController::class,'view_add_size'])->name('add_size');
+
+
     Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori');
 
     Route::get('/supplier', [SupplierController::class, 'index'])->name('supplier');

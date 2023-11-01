@@ -11,5 +11,5 @@ class Pembelian extends Model
 
     protected $table = 'pembelian';
     protected $primaryKey = 'id_pembelian';
-    protected $fillable = ['tanggal','total_pembelian','metode_pembayaran'];
+    protected $fillable = ['tanggal','id_supplier','total_pembelian','metode_pembayaran'];
 }

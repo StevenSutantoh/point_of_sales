@@ -92,6 +92,7 @@ class PembelianController extends Controller
             $data['total_pembelian'] = $data['kuantitas'] * $data['harga_beli'];
             $data_new = array(
                 'tanggal' => $data['tanggal'],
+                'id_supplier' => $data['id_supplier'],
                 'total_pembelian' => $data['total_pembelian'],
                 'metode_pembayaran' => $data['metode_pembayaran']
             );
@@ -99,7 +100,6 @@ class PembelianController extends Controller
             DetailPembelian::create([
                 'id_pembelian' => $pembelian->id_pembelian,
                 'id_barang' => $data['id_barang'],
-                'id_supplier' => $data['id_supplier'],
                 'kuantitas' => $data['kuantitas'],
                 'harga_beli' => $data['harga_beli'],
             ]);

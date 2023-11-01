@@ -28,11 +28,12 @@
                             <tr>
                                 <th>#</th>
                                 <th>Nama Barang</th>
-                                <th>Supplier</th>
                                 <th>Kategori</th>
-                                <th>Stock</th>
+                                <th>Stok</th>
                                 <th>Merk</th>
+                                <th>Size</th>
                                 <th>Harga Beli</th>
+                                <th>Aksi</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -41,11 +42,14 @@
                                     <tr>
                                         <td>{{$i}}</td>
                                         <td>{{$item->nama_barang}}</td>
-                                        <td>{{$item->id_supplier}}</td>
                                         <td>{{$item->nama_kategori}}</td>
                                         <td>{{$item->stok}}</td>
                                         <td>{{$item->merk}}</td>
+                                        <td>{{$item->size}}</td>
                                         <td>{{$item->harga_jual}}</td>
+                                        <td>
+                                            <a href="{{route('admin.add_size')}}" class="btn btn-primary">Tambah Size</a>
+                                        </td>
                                     </tr>
                                     <?php $i++; ?>
                                 @endforeach
