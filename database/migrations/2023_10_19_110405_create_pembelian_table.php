@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('pembelian', function (Blueprint $table) {
             $table->increments('id_pembelian');
-            $table->bigInteger('id_supplier');
+            $table->unsignedInteger('id_supplier');
             $table->string('tanggal',50);
             $table->integer('total_pembelian');
             $table->string('metode_pembayaran');
             $table->timestamps();
+
             $table->foreign('id_supplier')
                   ->references('id_supplier')
                   ->on('supplier')

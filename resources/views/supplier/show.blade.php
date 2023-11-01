@@ -28,7 +28,7 @@
                                         <th>ID</th><td>{{ $supplier->id_supplier }}</td>
                                     </tr>
                                     <tr>
-                                        <th> Nama Supplier </th><td> {{ $supplier->nama }} </td>
+                                        <th> Nama Supplier </th><td> {{ $supplier->nama_supplier }} </td>
                                     </tr>
                                     <tr>
                                         <th> Alamat </th><td> {{ $supplier->alamat }} </td>
