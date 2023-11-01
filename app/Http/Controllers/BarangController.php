@@ -93,8 +93,53 @@ class BarangController extends Controller
         return redirect()->back()->with('success','Berhasil menambahkan barang baru');
     }
 
-    public function view_add_size(){
-        
+    public function view_add_size($nama){
+        $list_existed = Barang::where('nama_barang',$nama)->get();
+        return view('barang.add_size',compact('list_existed'));
+    }
+
+    public function add_size(Request $request){
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'new_size' => 'required',
+        ]);
+        if ($validator->fails()) {
+            // Handle the validation failure for the second field
+            return redirect()->back()->with('error',$validator->errors());
+        }
+        DB::beginTransaction();
+        try{
+            $detail_barang = Barang::where('id_barang',$data['id_barang'])->first();
+            $detail_barang['size'] = $data['new_size'];
+            Barang::create([
+                'id_kategori' => $detail_barang['id_kategori'],
+                'nama_barang' => $detail_barang['nama_barang'],
+                'id_supplier' => $detail_barang['id_supplier'],
+                'stok' => $detail_barang['stok'],
+                'merk' => $detail_barang['merk'],
+                'size' => $data['new_size'],
+                'harga_jual' => $detail_barang['harga_jual'],
+            ]);
+            DB::commit();
+        }
+        catch(Exception $e){
+            DB::rollback();
+            return redirect()->back()->with('error',$e->getMessage);
+        }
+        return redirect()->back()->with('success','Berhasil menambahkan size baru');
+        // Barang::
+    }
+    public function del_size($id_barang,$size){
+        $barang = Barang::where('id_barang',$id_barang)->first();
+        try{
+            Barang::where('nama_barang',$barang->nama_barang)->where('size',$size)->delete();
+            DB::commit();
+        }
+        catch(Exception $e){
+            DB::rollback();
+            return redirect()->back()->with('error',$e->getMessage);
+        }
+        return redirect()->back()->with('success','Berhasil menghapus size');
     }
     /**
      * Store a newly created resource in storage.

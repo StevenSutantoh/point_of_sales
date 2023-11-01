@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('id_barang');
             $table->unsignedInteger('id_kategori');
             $table->integer('id_stok');
-            $table->string('nama_barang')->unique();
+            $table->string('nama_barang');
             $table->string('merk')->nullable();
             $table->integer('kuantitas');
             $table->integer('harga_jual');

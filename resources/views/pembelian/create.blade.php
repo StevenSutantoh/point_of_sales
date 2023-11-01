@@ -21,16 +21,16 @@
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Nama Barang :</strong>
+                    <strong>Nama Supplier :</strong>
                     <br/>
-                    {!! Form::select('id_barang', $list_barang, null, ['class' => 'form-control']) !!}
+                    {!! Form::select('id_supplier', $list_supplier, null, ['class' => 'form-control']) !!}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Nama Supplier :</strong>
+                    <strong>Nama Barang :</strong>
                     <br/>
-                    {!! Form::select('id_supplier', $list_supplier, null, ['class' => 'form-control']) !!}
+                    {!! Form::select('id_barang', $list_barang, null, ['class' => 'form-control']) !!}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
