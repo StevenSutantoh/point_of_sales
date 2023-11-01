@@ -34,8 +34,7 @@ class PembelianController extends Controller
 
         if (!empty($keyword)) {
             $list_pembelian = Pembelian::
-                  join('detail_pembelians as dp','dp.id_pembelian','pembelian.id_pembelian')
-                ->join('supplier as s','s.id_supplier','dp.id_supplier')
+                  join('supplier as s','s.id_supplier','pembelian.id_supplier')
                 ->where('nama', 'LIKE', "%$keyword%")
                 ->orWhere('tanggal', 'LIKE', "%$keyword%")
                 ->orWhere('nama_barang', 'LIKE', "%$keyword%")
@@ -46,7 +45,7 @@ class PembelianController extends Controller
             } else {
                 $list_pembelian = Pembelian:: 
                               join('detail_pembelians as dp','dp.id_pembelian','pembelian.id_pembelian')
-                            ->join('supplier as s','s.id_supplier','dp.id_supplier')
+                            ->join('supplier as s','s.id_supplier','pembelian.id_supplier')
                             ->latest('pembelian.created_at')
                             ->paginate($perPage);
         }
@@ -61,7 +60,12 @@ class PembelianController extends Controller
     public function create()
     {
         $list_supplier = Supplier::orderBy('nama','ASC')->get()->pluck('nama', 'id_supplier');
-        $list_barang = Barang::orderBy('nama_barang','ASC')->get()->pluck('nama_barang', 'id_barang');
+        $list_barang = Barang::orderBy('nama_barang','ASC')->get();
+        $arr = array();
+        foreach($list_barang as $barang){
+            $arr[$barang->id_barang] = $barang->nama_barang.' - '.$barang->merk.' ['.$barang->size.']';
+        }
+        $list_barang = $arr;
         return view('pembelian.create',compact('list_supplier','list_barang'));
     }
     
@@ -115,7 +119,7 @@ class PembelianController extends Controller
     public function show(string $id)
     {
         $pembelian = Pembelian::join('detail_pembelians as dp','dp.id_pembelian','pembelian.id_pembelian')
-                            ->join('supplier as s','dp.id_supplier','s.id_supplier')
+                            ->join('supplier as s','pembelian.id_supplier','s.id_supplier')
                             ->join('barang as b','b.id_barang','dp.id_barang')
                             ->where('dp.id_pembelian',$id)
                             ->get();
@@ -133,6 +137,6 @@ class PembelianController extends Controller
      */
     public function add(string $id)
     {
-        //
+        
     }
 }

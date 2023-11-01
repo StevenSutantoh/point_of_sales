@@ -48,7 +48,7 @@
                                         <td>{{$item->size}}</td>
                                         <td>{{$item->harga_jual}}</td>
                                         <td>
-                                            <a href="{{route('admin.add_size')}}" class="btn btn-primary">Tambah Size</a>
+                                            <a href="{{route('admin.add_size',$item->nama_barang)}}" class="btn btn-primary">Tambah Size</a>
                                         </td>
                                     </tr>
                                     <?php $i++; ?>

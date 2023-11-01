@@ -42,7 +42,9 @@ Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], f
     
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/barang',[BarangController::class,'index'])->name('barang');
-    Route::get('/add_size',[BarangController::class,'view_add_size'])->name('add_size');
+    Route::get('/add_size/{nama}',[BarangController::class,'view_add_size'])->name('add_size');
+    Route::post('/add_size',[BarangController::class,'add_size'])->name('confirm_add_size');
+    Route::get('/del_size/{id}/{size}',[BarangController::class,'del_size'])->name('hapus_size');
 
 
     Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori');
