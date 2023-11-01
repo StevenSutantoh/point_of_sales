@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pembelian;
+use App\Models\DetailPembelian;
 use App\Models\Barang;
 use App\Models\Supplier;
 use Validator;
+use DB;
 
 class PembelianController extends Controller
 {
@@ -31,16 +33,20 @@ class PembelianController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $list_pembelian = Pembelian::where('nama', 'LIKE', "%$keyword%")
+            $list_pembelian = Pembelian::
+                  join('detail_pembelians as dp','dp.id_pembelian','pembelian.id_pembelian')
+                ->join('supplier as s','s.id_supplier','dp.id_supplier')
+                ->where('nama', 'LIKE', "%$keyword%")
                 ->orWhere('tanggal', 'LIKE', "%$keyword%")
                 ->orWhere('nama_barang', 'LIKE', "%$keyword%")
                 ->orWhere('kuantitas', 'LIKE', "%$keyword%")
                 ->orWhere('harga_jual', 'LIKE', "%$keyword%")
                 ->orWhere('metode_pembayaran', 'LIKE', "%$keyword%")
-                ->join('supplier as s','s.id_supplier','pembelian.id_supplier')
                 ->latest()->paginate($perPage);
             } else {
-                $list_pembelian = Pembelian::join('supplier as s','s.id_supplier','pembelian.id_supplier')
+                $list_pembelian = Pembelian:: 
+                              join('detail_pembelians as dp','dp.id_pembelian','pembelian.id_pembelian')
+                            ->join('supplier as s','s.id_supplier','dp.id_supplier')
                             ->latest('pembelian.created_at')
                             ->paginate($perPage);
         }
@@ -80,22 +86,53 @@ class PembelianController extends Controller
             // Handle the validation failure for the second field
             return redirect()->back()->with('error',$validator->errors());
         }
-        $data['nama_barang'] = Barang::where('id_barang',$data['id_barang'])->first()->nama_barang;
-        $data['total_pembelian'] = $data['kuantitas'] * $data['harga_beli'];
-        
-        $data_new = array(
-            'id_barang' => $data['id_barang'],
-            'id_supplier' => $data['id_supplier'],
-            'tanggal' => $data['tanggal'],
-            'nama_barang' => $data['nama_barang'],
-            'kuantitas' => $data['kuantitas'],
-            'harga_beli' => $data['harga_beli'],
-            'total_pembelian' => $data['total_pembelian'],
-            'metode_pembayaran' => $data['metode_pembayaran']
-        );
-        Pembelian::create($data_new);
-    
-        return redirect()->route('pembelian.index')
-                        ->with('success','Pembelian baru telah dicatat');
+        DB::beginTransaction();
+        try {
+            $data['nama_barang'] = Barang::where('id_barang',$data['id_barang'])->first()->nama_barang;
+            $data['total_pembelian'] = $data['kuantitas'] * $data['harga_beli'];
+            $data_new = array(
+                'tanggal' => $data['tanggal'],
+                'total_pembelian' => $data['total_pembelian'],
+                'metode_pembayaran' => $data['metode_pembayaran']
+            );
+            $pembelian = Pembelian::create($data_new);
+            DetailPembelian::create([
+                'id_pembelian' => $pembelian->id_pembelian,
+                'id_barang' => $data['id_barang'],
+                'id_supplier' => $data['id_supplier'],
+                'kuantitas' => $data['kuantitas'],
+                'harga_beli' => $data['harga_beli'],
+            ]);
+            DB::commit();
+        }
+        catch(Exception $e){
+            DB::rollback();
+            return redirect()->route('pembelian.index')->with('error',$e->getMessage());
+        }
+        return redirect()->route('pembelian.index')->with('success','Invoice pembelian baru telah dicatat');
+    }
+
+    public function show(string $id)
+    {
+        $pembelian = Pembelian::join('detail_pembelians as dp','dp.id_pembelian','pembelian.id_pembelian')
+                            ->join('supplier as s','dp.id_supplier','s.id_supplier')
+                            ->join('barang as b','b.id_barang','dp.id_barang')
+                            ->where('dp.id_pembelian',$id)
+                            ->get();
+        return view('pembelian.show',compact('pembelian'));
+    }
+     /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+     /**
+     * Show the form for editing the specified resource.
+     */
+    public function add(string $id)
+    {
+        //
     }
 }

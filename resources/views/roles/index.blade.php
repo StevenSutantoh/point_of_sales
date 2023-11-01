@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title','Daftar Role')
 
 @section('content')
 <section class="content">

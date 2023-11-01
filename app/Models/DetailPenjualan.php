@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class DetailPenjualan extends Model
+{
+    use HasFactory;
+
+    protected $table = 'detail_penjualans';
+    protected $primaryKey = 'id_detail_penjualan';
+    protected $fillable = ['id_penjualan', 'id_customer', 'id_barang', 'kuantitas', 'harga_beli'];
+}

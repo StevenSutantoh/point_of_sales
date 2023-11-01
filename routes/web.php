@@ -11,6 +11,7 @@ use App\Http\Controllers\{
     SupplierController,
     RoleController,
     PembelianController,
+    PenjualanController,
 };
 
 use Illuminate\Support\Facades\Route;
@@ -63,6 +64,9 @@ Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], f
     // Route::get();
 
     Route::post('store_user',[UserController::class,'store'])->name('store_user');
+    
+    // Pembelian Additional
+    Route::get('add/{id}',[PembelianController::class,'add'])->name('pembelian.add');
 });
 
 

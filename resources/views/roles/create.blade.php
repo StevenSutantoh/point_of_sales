@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title','Pembuatan role')
 
 @section('content')
 <section class="content">

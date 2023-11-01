@@ -26,28 +26,28 @@
                           <table id="table_barang" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Nama Barang</th>
-                                <th>Supplier</th>
+                                <th>ID</th>
                                 <th>Tanggal</th>
-                                <th>Kuantitas</th>
                                 <th>Total Pembelian</th>
                                 <th>Metode Pembayaran</th>
                                 <th>Invoice dibuat</th>
+                                <th>Aksi Detail</th>
                             </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
                                 @foreach ($list_pembelian as $item)
                                     <tr>
-                                        <td>{{$i}}</td>
-                                        <td>{{$item->nama_barang}}</td>
-                                        <td>{{$item->nama}}</td>
+                                        <td>{{$item->id_pembelian}}</td>
                                         <td>{{$item->tanggal}}</td>
-                                        <td>{{$item->kuantitas}}</td>
                                         <td>{{$item->total_pembelian}}</td>
                                         <td>{{$item->metode_pembayaran}}</td>
                                         <td>{{$item->created_at}}</td>
+                                        <td>
+                                            <a class="btn btn-primary" href="{{ route('pembelian.show',$item->id_pembelian) }}">Lihat</a>
+                                            <a class="btn btn-success" href="{{ route('admin.pembelian.add',$item->id_pembelian)}}">Tambah</a>
+                                            <a class="btn btn-warning" href="{{ route('pembelian.edit',$item->id_pembelian)}}">Edit</a>
+                                        </td>
                                     </tr>
                                     <?php $i++; ?>
                                 @endforeach

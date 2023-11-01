@@ -13,13 +13,8 @@ return new class extends Migration
     {
         Schema::create('pembelian', function (Blueprint $table) {
             $table->increments('id_pembelian');
-            $table->integer('id_supplier');
-            $table->integer('id_barang');
-            $table->date('tanggal');
-            $table->string('nama_barang');
-            $table->integer('kuantitas');
-            $table->integer('harga_beli');
-            $table->integer('subtotal');
+            $table->string('tanggal',50);
+            $table->integer('total_pembelian');
             $table->string('metode_pembayaran');
             $table->timestamps();
         });
