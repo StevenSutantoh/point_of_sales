@@ -30,28 +30,31 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Nama Supplier</th><th>Alamat</th><th>Telepon</th><th>Actions</th>
+                                        <th>NO</th><th>Nama Supplier</th><th>Alamat</th><th>Telepon</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($supplier as $item)
-                                    <tr>
-                                        <td>{{ $item->id_supplier }}</td>
-                                        <td>{{ $item->nama_supplier }}</td>
-                                        <td>{{ $item->alamat }}</td>
-                                        <td>{{ $item->telepon }}</td>
-                                        <td>
-                                            <a href="{{ url('/supplier/' . $item->id_supplier) }}" title="View Supplier"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/supplier/' . $item->id_supplier . '/edit') }}" title="Edit Supplier"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                                    <?php $i = 1; ?>
+                                    @foreach($supplier as $item)
+                                        <tr>
+                                            <td>{{$i}}</td>
+                                            {{-- <td>{{ $item->id_supplier }}</td> --}}
+                                            <td>{{ $item->nama_supplier }}</td>
+                                            <td>{{ $item->alamat }}</td>
+                                            <td>{{ $item->telepon }}</td>
+                                            <td>
+                                                <a href="{{ url('/supplier/' . $item->id_supplier) }}" title="View Supplier"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                                <a href="{{ url('/supplier/' . $item->id_supplier . '/edit') }}" title="Edit Supplier"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
 
-                                            <form method="POST" action="{{ url('/supplier' . '/' . $item->id_supplier) }}" accept-charset="UTF-8" style="display:inline">
-                                                {{ method_field('DELETE') }}
-                                                {{ csrf_field() }}
-                                                <button type="submit" class="btn btn-danger btn-sm" title="Delete Supplier" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                                <form method="POST" action="{{ url('/supplier' . '/' . $item->id_supplier) }}" accept-charset="UTF-8" style="display:inline">
+                                                    {{ method_field('DELETE') }}
+                                                    {{ csrf_field() }}
+                                                    <button type="submit" class="btn btn-danger btn-sm" title="Delete Supplier" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <?php $i++; ?>
+                                    @endforeach
                                 </tbody>
                             </table>
                             <div class="pagination-wrapper"> {!! $supplier->appends(['search' => Request::get('search')])->render() !!} </div>

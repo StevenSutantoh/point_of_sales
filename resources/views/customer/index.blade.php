@@ -30,28 +30,31 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Nama Customer</th><th>Alamat</th><th>Telepon</th><th>Actions</th>
+                                        <th>NO</th><th>Nama Customer</th><th>Alamat</th><th>Telepon</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($customer as $item)
-                                    <tr>
-                                        <td>{{ $item->id_customer }}</td>
-                                        <td>{{ $item->nama_customer }}</td>
-                                        <td>{{ $item->alamat }}</td>
-                                        <td>{{ $item->telepon }}</td>
-                                        <td>
-                                            <a href="{{ url('/customer/' . $item->id_customer) }}" title="View Customer"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/customer/' . $item->id_customer . '/edit') }}" title="Edit Customer"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                                    <?php $i = 1; ?>
+                                    @foreach($customer as $item)
+                                        <tr>
+                                            <td>{{$i}}</td>
+                                            {{-- <td>{{ $item->id_customer }}</td> --}}
+                                            <td>{{ $item->nama_customer }}</td>
+                                            <td>{{ $item->alamat }}</td>
+                                            <td>{{ $item->telepon }}</td>
+                                            <td>
+                                                <a href="{{ url('/customer/' . $item->id_customer) }}" title="View Customer"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                                <a href="{{ url('/customer/' . $item->id_customer . '/edit') }}" title="Edit Customer"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
 
-                                            <form method="POST" action="{{ url('/customer' . '/' . $item->id_customer) }}" accept-charset="UTF-8" style="display:inline">
-                                                {{ method_field('DELETE') }}
-                                                {{ csrf_field() }}
-                                                <button type="submit" class="btn btn-danger btn-sm" title="Delete Customer" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                                <form method="POST" action="{{ url('/customer' . '/' . $item->id_customer) }}" accept-charset="UTF-8" style="display:inline">
+                                                    {{ method_field('DELETE') }}
+                                                    {{ csrf_field() }}
+                                                    <button type="submit" class="btn btn-danger btn-sm" title="Delete Customer" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <?php $i++; ?>
+                                    @endforeach
                                 </tbody>
                             </table>
                             <div class="pagination-wrapper"> {!! $customer->appends(['search' => Request::get('search')])->render() !!} </div>

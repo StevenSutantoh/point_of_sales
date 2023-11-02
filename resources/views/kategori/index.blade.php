@@ -30,26 +30,29 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Nama Kategori</th><th>Actions</th>
+                                        <th>NO</th><th>Nama Kategori</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($kategori as $item)
-                                    <tr>
-                                        <td>{{ $item->id_kategori }}</td>
-                                        <td>{{ $item->nama_kategori }}</td>
-                                        <td>
-                                            <a href="{{ url('/kategori/' . $item->id_kategori) }}" title="View Kategori"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/kategori/' . $item->id_kategori . '/edit') }}" title="Edit Kategori"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                                    <?php $i = 1; ?>
+                                    @foreach($kategori as $item)
+                                        <tr>
+                                            <td>{{$i}}</td>
+                                            {{-- <td>{{ $item->id_kategori }}</td> --}}
+                                            <td>{{ $item->nama_kategori }}</td>
+                                            <td>
+                                                <a href="{{ url('/kategori/' . $item->id_kategori) }}" title="View Kategori"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                                <a href="{{ url('/kategori/' . $item->id_kategori . '/edit') }}" title="Edit Kategori"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
 
-                                            <form method="POST" action="{{ url('/kategori' . '/' . $item->id_kategori) }}" accept-charset="UTF-8" style="display:inline">
-                                                {{ method_field('DELETE') }}
-                                                {{ csrf_field() }}
-                                                <button type="submit" class="btn btn-danger btn-sm" title="Delete Kategori" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                                <form method="POST" action="{{ url('/kategori' . '/' . $item->id_kategori) }}" accept-charset="UTF-8" style="display:inline">
+                                                    {{ method_field('DELETE') }}
+                                                    {{ csrf_field() }}
+                                                    <button type="submit" class="btn btn-danger btn-sm" title="Delete Kategori" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <?php $i++; ?>
+                                    @endforeach
                                 </tbody>
                             </table>
                             <div class="pagination-wrapper"> {!! $kategori->appends(['search' => Request::get('search')])->render() !!} </div>
