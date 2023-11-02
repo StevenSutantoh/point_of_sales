@@ -41,8 +41,8 @@
                                     <tr>
                                         <td>{{$item->id_pembelian}}</td>
                                         <td>{{$item->tanggal}}</td>
-                                        <td>{{$item->nama}}</td>
-                                        <td>{{$item->total_pembelian}}</td>
+                                        <td>{{$item->nama_supplier}}</td>
+                                        <td>Rp. {{number_format($item->total_pembelian)}}</td>
                                         <td>{{$item->metode_pembayaran}}</td>
                                         <td>{{$item->created_at}}</td>
                                         <td>

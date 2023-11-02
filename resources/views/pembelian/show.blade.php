@@ -64,7 +64,7 @@
                     <tbody>
                         @foreach ($pembelian as $item)
                             <tr>
-                                <td>{{$item->nama}}</td>
+                                <td>{{$item->nama_supplier}}</td>
                                 <td>{{$item->nama_barang}}</td>
                                 <td>{{$item->kuantitas}}</td>
                                 <td>Rp. {{number_format($item->harga_beli)}}</td>

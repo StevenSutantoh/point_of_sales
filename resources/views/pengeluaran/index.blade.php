@@ -37,7 +37,7 @@
                                 @foreach($pengeluaran as $item)
                                     <tr>
                                         <td>{{ $item->id_pengeluaran }}</td>
-                                        <td>{{ $item->tanggal }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('Y-m-d') }}</td>
                                         <td>{{ $item->deskripsi }}</td>
                                         <td>{{ $item->nominal }}</td>
                                         <td>

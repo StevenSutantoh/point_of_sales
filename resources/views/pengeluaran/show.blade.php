@@ -28,7 +28,7 @@
                                         <th>ID</th><td>{{ $pengeluaran->id_pengeluaran }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Tanggal</th><td>{{ $pengeluaran->tanggal }}</td>
+                                        <th>Tanggal</th><td>{{ \Carbon\Carbon::parse($pengeluaran->created_at)->format('Y-m-d') }}</td>
                                     </tr>
                                     <tr>
                                         <th> Deskripsi </th><td> {{ $pengeluaran->deskripsi }} </td>
