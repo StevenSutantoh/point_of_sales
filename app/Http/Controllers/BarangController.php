@@ -104,6 +104,7 @@ class BarangController extends Controller
         $data = $request->all();
         $validator = Validator::make($data, [
             'new_size' => 'required',
+            'stok' => 'required'
         ]);
         if ($validator->fails()) {
             // Handle the validation failure for the second field
@@ -117,7 +118,7 @@ class BarangController extends Controller
                 'id_kategori' => $detail_barang['id_kategori'],
                 'nama_barang' => $detail_barang['nama_barang'],
                 'id_supplier' => $detail_barang['id_supplier'],
-                'stok' => $detail_barang['stok'],
+                'stok' => $data['stok'],
                 'merk' => $detail_barang['merk'],
                 'size' => $data['new_size'],
                 'harga_jual' => $detail_barang['harga_jual'],
