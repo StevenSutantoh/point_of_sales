@@ -20,7 +20,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="{{ asset('AdminLTE-2/dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
               <span>
-                {{ Auth::user()->name }}
+                {{ Auth::user() == null ? '' : Auth::user()->name }}
               </span>
             </a>
             <ul class="dropdown-menu">
@@ -28,10 +28,10 @@
               <li class="user-header">
                 <img src="{{ asset('AdminLTE-2/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
                 <p>
-                  {{ Auth::user()->name }}
+                  {{ Auth::user() == null ? '' : Auth::user()->name }}
                 </p>
                 <p>
-                  {{ Auth::user()->email }}
+                  {{ Auth::user() == null ? '' : Auth::user()->email }}
                 </p>
               </li>
               <!-- Menu Footer-->

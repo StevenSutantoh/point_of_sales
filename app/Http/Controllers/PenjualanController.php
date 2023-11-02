@@ -41,10 +41,12 @@ class PenjualanController extends Controller
                 ->orWhere('kuantitas', 'LIKE', "%$keyword%")
                 ->orWhere('harga_jual', 'LIKE', "%$keyword%")
                 ->orWhere('metode_pembayaran', 'LIKE', "%$keyword%")
+                ->select('penjualan.*','c.nama')
                 ->latest()->paginate($perPage);
             } else {
                 $list_penjualan = Penjualan::
                             join('customer as c','c.id_customer','penjualan.id_customer')
+                            ->select('penjualan.*','c.nama')
                             ->latest('penjualan.created_at')
                             ->paginate($perPage);
         }
@@ -85,7 +87,7 @@ class PenjualanController extends Controller
         try {
             $total = 0;
             for ($i=0; $i < count($data['ids']) ; $i++) { 
-              $total += $data['kuantitas'][$i] * $data['harga_jual'][$i];
+              $total += ($data['kuantitas'][$i] * $data['harga_jual'][$i]);
             }
             $penjualan = Penjualan::create([
                 'tanggal' => $data['tanggal'],
@@ -102,6 +104,9 @@ class PenjualanController extends Controller
                 $item['harga_jual'] = $data['harga_jual'][$i];
                 // array_push($arr,$item);
                 DetailPenjualan::create($item);
+                Barang::where('id_barang',$data['ids'][$i])->update([
+                    'stok' => DB::raw('stok - '.$data['kuantitas'][$i])
+                ]);
             }
             DB::commit();
         }
@@ -113,6 +118,86 @@ class PenjualanController extends Controller
     }
 
     public function show($id){
+        $penjualan = Penjualan::where('penjualan.id_penjualan',$id)
+                        ->join('detail_penjualans as dp','dp.id_penjualan','penjualan.id_penjualan')
+                        ->join('customer as c','c.id_customer','penjualan.id_customer')
+                        ->join('barang as b','b.id_barang','dp.id_barang')
+                        ->select('penjualan.*','dp.*','c.nama','b.nama_barang','b.merk','b.size')
+                        ->get();
+        return view('penjualan.show',compact('penjualan'));
+    }
 
+    public function edit($id){
+        $penjualan = Penjualan::where('penjualan.id_penjualan',$id)
+                        ->join('detail_penjualans as dp','dp.id_penjualan','penjualan.id_penjualan')
+                        ->join('customer as c','c.id_customer','penjualan.id_customer')
+                        ->join('barang as b','b.id_barang','dp.id_barang')
+                        ->select('penjualan.*','dp.*','c.nama','b.nama_barang','b.merk','b.size')
+                        ->get();
+        return view('penjualan.show',compact('penjualan'));
+    }
+    public function editItem($id){
+        $detail_penjualan = DetailPenjualan::where('id_detail_penjualan',$id)->first();
+        $penjualan = Penjualan::where('id_penjualan',$detail_penjualan->id_penjualan)->first();
+        $barang = Barang::where('id_barang',$detail_penjualan['id_barang'])->first();
+        return view('penjualan.edit_item',compact('detail_penjualan','penjualan','barang'));
+    }
+    public function commitEdit(Request $request){
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'kuantitas' => 'required',
+            'harga_jual' => 'required',
+        ]);
+        if ($validator->fails()) {
+            // Handle the validation failure for the second field
+            return redirect()->back()->with('error',$validator->errors());
+        }
+        DB::beginTransaction();
+        try{
+            $id_det_penjualan = $data['id_detail_penjualan'];
+            $id_barang = $data['id_barang'];
+            $id_penjualan = $data['id_penjualan'];
+            $detail_penjualan = DetailPenjualan::where('id_detail_penjualan',$id_det_penjualan)->first();
+            $selisih_jumlah = $data['kuantitas'] - $detail_penjualan['kuantitas'];
+            $total_lama = $detail_penjualan['kuantitas'] * $detail_penjualan['harga_jual'];
+            $total_baru = $data['kuantitas'] * $data['harga_jual'];
+            $selisih_total = $total_baru - $total_lama;
+            Penjualan::where('id_penjualan',$id_penjualan)->update([
+                'total_penjualan' => DB::raw('total_penjualan + '.$selisih_total),
+            ]);
+            DetailPenjualan::where('id_detail_penjualan',$id_det_penjualan)->update([
+                'kuantitas' => $data['kuantitas'],
+                'harga_jual' => $data['harga_jual']
+            ]);
+            Barang::where('id_barang',$id_barang)->update([
+                'stok' => DB::raw('id_barang + '.$selisih_jumlah)
+            ]);
+            DB::commit();
+
+        }
+        catch(Exception $e){
+            DB::rollback();
+            return redirect()->back()->with('error',$e->getMessage());
+        }
+        return redirect()->back()->with('success','Detail penjualan berhasil di edit');
+    }
+    public function delItem($id){
+        DB::beginTransaction();
+        try{
+            $detail_penjualan = DetailPenjualan::where('id_detail_penjualan',$id)->first();
+            Barang::where('id_barang',$detail_penjualan->id_barang)->update([
+                'stok' => DB::raw('stok + '.$detail_penjualan->kuantitas)
+            ]);
+            Penjualan::where('id_penjualan',$detail_penjualan->id_penjualan)->update([
+                'total_penjualan' => DB::raw('total_penjualan - '.($detail_penjualan->kuantitas * $detail_penjualan->harga_jual))
+            ]);
+            DetailPenjualan::where('id_detail_penjualan',$id)->delete();
+            DB::commit();
+        }
+        catch(Exception $e){
+            DB::rollback();
+            return redirect()->back()->with('error',$e->getMessage());
+        }
+        return redirect()->back()->with('success','Detail penjualan telah dihapus');
     }
 }

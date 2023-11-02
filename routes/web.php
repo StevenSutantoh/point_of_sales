@@ -77,6 +77,9 @@ Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], f
 
     //Penjualan Additional
     Route::post('next_page',[PenjualanController::class,'secondPageCreate'])->name('penjualan.next');
+    Route::get('edit_item_penjualan/{id}',[PenjualanController::class,'editItem'])->name('penjualan.edit_item');
+    Route::get('hapus_item_penjualan/{id}',[PenjualanController::class,'delItem'])->name('penjualan.destroy_item');
+    Route::post('commit_edit_penjualan',[PenjualanController::class,'commitEdit'])->name('penjualan.commit_edit_change');
 });
 
 

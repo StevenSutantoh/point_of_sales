@@ -45,11 +45,10 @@
                                         <td>{{$item->nama}}</td>
                                         <td>Rp. {{number_format($item->total_penjualan)}}</td>
                                         <td class="text-bold">{{strtoupper($item->metode_pembayaran)}}</td>
-                                        <td class="text-bold @if($item->status_pembayaran == 'approve') bg-success @else bg-warning @endif">{{$item->status_pembayaran}}</td>
+                                        <td class="text-bold @if($item->status_pembayaran == 'approve') bg-success @else bg-warning @endif">{{strtoupper($item->status_pembayaran)}}</td>
                                         <td>{{$item->created_at}}</td>
                                         <td>
                                             <a class="btn btn-primary" href="{{ route('penjualan.show',$item->id_penjualan) }}">Lihat</a>
-                                            <a class="btn btn-warning" href="{{ route('penjualan.edit',$item->id_penjualan)}}">Edit</a>
                                         </td>
                                     </tr>
                                     <?php $i++; ?>
