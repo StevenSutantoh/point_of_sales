@@ -12,6 +12,7 @@ use App\Http\Controllers\{
     RoleController,
     PembelianController,
     PenjualanController,
+    ReportController,
 };
 
 use Illuminate\Support\Facades\Route;
@@ -80,6 +81,10 @@ Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], f
     Route::get('edit_item_penjualan/{id}',[PenjualanController::class,'editItem'])->name('penjualan.edit_item');
     Route::get('hapus_item_penjualan/{id}',[PenjualanController::class,'delItem'])->name('penjualan.destroy_item');
     Route::post('commit_edit_penjualan',[PenjualanController::class,'commitEdit'])->name('penjualan.commit_edit_change');
+
+    //Laporan
+    Route::get('report',[ReportController::class,'index'])->name('report');
+    Route::get('report/{type}',[ReportController::class,'detail'])->name('report_type');
 });
 
 
