@@ -30,8 +30,9 @@
                             <label>Supplier</label>
                             <select class="form-control" style="width: 100%;" name="id_supplier" id="id_supplier">
                                 <option selected="selected" value="0">Pilih Supplier Barang</option>
-                                <option value="1">JayaPura</option>
-                                <option value="2">Karawaci</option>
+                                @foreach ($list_supplier as $item)
+                                    <option value="{{$item->id_supplier}}">{{$item->nama}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">

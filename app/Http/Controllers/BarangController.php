@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Barang;
 use App\Models\Kategori;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Validator;
 use App\Http\Controllers\Controller;
@@ -61,7 +62,8 @@ class BarangController extends Controller
 
     public function view_create(){
         $list_kategori = Kategori::all();
-        return view('barang.create',compact('list_kategori'));
+        $list_supplier = Supplier::all();
+        return view('barang.create',compact('list_kategori','list_supplier'));
     }
     /**
      * Show the form for creating a new resource.
