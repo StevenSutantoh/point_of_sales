@@ -13,6 +13,7 @@ use App\Http\Controllers\{
     PembelianController,
     PenjualanController,
     ReportController,
+    ReturController,
 };
 
 use Illuminate\Support\Facades\Route;
@@ -85,6 +86,14 @@ Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], f
     //Laporan
     Route::get('report',[ReportController::class,'index'])->name('report');
     Route::get('report/type={type}',[ReportController::class,'detail'])->name('report_type');
+
+    // Retur
+    Route::get('retur_sales_index',[ReturController::class,'sales_index'])->name('retur_sales_index');
+    Route::get('retur_sales_index/create',[ReturController::class,'sales_create'])->name('retur_sales.create');
+    Route::post('retur_sales/secondPage',[ReturController::class,'sales_2ndPage'])->name('retur_sales.2nd_page');
+    Route::post('retur_sales/thirdPage',[ReturController::class,'sales_3rdPage'])->name('retur_sales.3rd_page');
+    Route::get('retur_sales/confirmRetur/{id}',[ReturController::class,'confirmRetur'])->name('retur_sales.confirm_retur');
+
 });
 
 

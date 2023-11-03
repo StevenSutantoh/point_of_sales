@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="row">
-                    <a href="{{route('penjualan.create')}}" class="btn btn-primary">
+                    <a href="{{route('admin.retur_sales.create')}}" class="btn btn-primary">
                         Tambah Retur Penjualan
                     </a>
                 </div>
@@ -29,27 +29,25 @@
                                 <th>ID</th>
                                 <th>Tanggal</th>
                                 <th>Customer</th>
-                                <th>Total Penjualan</th>
-                                <th>Metode Pembayaran</th>
-                                <th>Status Pembayaran</th>
+                                <th>Nama Barang</th>
+                                <th>Merk</th>
+                                <th>Size</th>
+                                <th>Total</th>
                                 <th>Invoice dibuat</th>
-                                <th>Aksi Detail</th>
                             </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                @foreach ($list_penjualan as $item)
+                                @foreach ($list_retur_penjualan as $item)
                                     <tr>
-                                        <td>{{$item->id_penjualan}}</td>
+                                        <td>{{$item->id_retur_penjualan}}</td>
                                         <td>{{$item->tanggal}}</td>
                                         <td>{{$item->nama_customer}}</td>
-                                        <td>Rp. {{number_format($item->total_penjualan)}}</td>
-                                        <td class="text-bold">{{strtoupper($item->metode_pembayaran)}}</td>
-                                        <td class="text-bold @if($item->status_pembayaran == 'approve') bg-success @else bg-warning @endif">{{strtoupper($item->status_pembayaran)}}</td>
+                                        <td>{{$item->nama_barang}}</td>
+                                        <td>{{$item->merk}}</td>
+                                        <td>{{$item->size}}</td>
+                                        <td>Rp. {{number_format($item->harga)}}</td>
                                         <td>{{$item->created_at}}</td>
-                                        <td>
-                                            <a class="btn btn-primary" href="{{ route('penjualan.show',$item->id_penjualan) }}">Lihat</a>
-                                        </td>
                                     </tr>
                                     <?php $i++; ?>
                                 @endforeach
