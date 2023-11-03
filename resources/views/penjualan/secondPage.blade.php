@@ -37,7 +37,7 @@
                     Harga Rata-rata :
                     {{
                         in_array($item->id_barang,$arr_id_terjual) && in_array($item->id_barang,$arr_id_exist) ? 
-                        "Rp ".number_format(($arr_total_price[$item->id_barang])/$item->stok) :
+                        "Rp ".number_format(($arr_total_price[$item->id_barang])/($item->stok + $arr_jlh_terjual[$item->id_barang])) :
                         "Belum ada pembelian / penjualan"
                     }}
                 </p>

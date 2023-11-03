@@ -88,11 +88,12 @@ class BarangController extends Controller
                 $jumlah_terjual = 0;
             }
             $arr_terjual[$item->id_barang] = $total;
+            $arr_jlh_terjual[$item->id_barang] = $jumlah_terjual;
             array_push($arr_id_terjual,$item->id_barang);
         }
         $list_kategori = Kategori::all();
 
-        return view('barang.index', compact('barang','list_kategori','arr_total_price','arr_last_price','arr_id_exist','arr_terjual','arr_id_terjual'));
+        return view('barang.index', compact('barang','list_kategori','arr_total_price','arr_last_price','arr_id_exist','arr_terjual','arr_id_terjual','arr_jlh_terjual'));
     }
 
     public function view_create(){
