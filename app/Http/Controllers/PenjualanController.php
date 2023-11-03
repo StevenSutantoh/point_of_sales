@@ -102,9 +102,10 @@ class PenjualanController extends Controller
                 $jumlah_terjual = 0;
             }
             $arr_terjual[$item->id_barang] = $total;
+            $arr_jlh_terjual[$item->id_barang] = $jumlah_terjual;
             array_push($arr_id_terjual,$item->id_barang);
         }
-        return view('penjualan.secondPage',compact('data','list_barang','arr_total_price','arr_last_price','arr_id_exist','arr_terjual','arr_id_terjual'));
+        return view('penjualan.secondPage',compact('data','list_barang','arr_total_price','arr_last_price','arr_id_exist','arr_terjual','arr_id_terjual','arr_jlh_terjual'));
     }
 
     public function store(Request $request){
