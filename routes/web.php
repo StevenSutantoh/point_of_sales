@@ -94,6 +94,12 @@ Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], f
     Route::post('retur_sales/thirdPage',[ReturController::class,'sales_3rdPage'])->name('retur_sales.3rd_page');
     Route::get('retur_sales/confirmRetur/{id}',[ReturController::class,'confirmRetur'])->name('retur_sales.confirm_retur');
 
+    Route::get('retur_purchase_index',[ReturController::class,'purchase_index'])->name('retur_purchase_index');
+    Route::get('retur_purchase_index/create',[ReturController::class,'purchase_create'])->name('retur_purchase.create');
+    Route::post('retur_purchase/secondPage',[ReturController::class,'purchase_2ndPage'])->name('retur_purchase.2nd_page');
+    Route::post('retur_purchase/thirdPage',[ReturController::class,'purchase_3rdPage'])->name('retur_purchase.3rd_page');
+    Route::get('retur_purchase/confirmRetur2/{id}',[ReturController::class,'confirmRetur2'])->name('retur_purchase.confirm_retur');
+
 });
 
 

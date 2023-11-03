@@ -61,7 +61,7 @@
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="{{route('admin.retur_purchase_index')}}">
                 <i class="fa fa-retweet"></i> <span>Retur Pembelian</span>
             </a>
         </li><li>
