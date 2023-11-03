@@ -17,14 +17,16 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>150</h3>
+              <h3><span>
+                Rp. 
+            </span></h3><br>
 
               <p>Total Pembelian</p>
             </div>
             <div class="icon">
               <i class="ion ion-bag"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{route('admin.report_type','purchase')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -32,14 +34,14 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>53<sup style="font-size: 20px">%</sup></h3>
+              <h3>Rp. </h3><br>
 
-              <p>Bounce Rate</p>
+              <p>Total Penjualan</p>
             </div>
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{route('admin.report_type','sales')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -47,14 +49,14 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>44</h3>
+              <h3>{{ Auth::user() == null ? '' : Auth::user()->name }}</h3><br>
 
-              <p>User Registrations</p>
+              <p>User Status</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{ route('admin.user') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -62,14 +64,14 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>65</h3>
+              <h3>Rp. </h3><br>
 
-              <p>Unique Visitors</p>
+              <p>Total Pengeluaran</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{route('admin.report_type','expense')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
