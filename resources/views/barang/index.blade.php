@@ -58,7 +58,7 @@
                                         </td>
                                         <td>
                                             @if (in_array($item->id_barang,$arr_id_terjual) && in_array($item->id_barang,$arr_id_exist))
-                                            Rp. {{number_format(($arr_total_price[$item->id_barang] - $arr_terjual[$item->id_barang])/$item->stok)}}
+                                            Rp. {{number_format(($arr_total_price[$item->id_barang])/$item->stok)}}
                                             @else 
                                             Belum ada pembelian / penjualan
                                             @endif
