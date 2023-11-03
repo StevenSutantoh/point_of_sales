@@ -17,78 +17,82 @@
                 <div class="pull-right">
                     <a class="btn btn-primary" href="{{ route('penjualan.index') }}"> Kembali</a>
                 </div>
-            </div>
-        </div>
-        
-        
-        <div class="row">
-            <div class="col-xs-6 col-sm-6 col-md-6">
-                <div class="form-group">
-                    <strong>Nama Customer :</strong>
-                    {{ $penjualan[0]->nama }}
-                </div>
-            </div>
-            <div class="col-xs-6 col-sm-6 col-md-6">
-                <div class="form-group">
-                    <strong>Tanggal :</strong>
-                    {{ $penjualan[0]->tanggal }}
-                </div>
-            </div>
-            <div class="col-xs-6 col-sm-6 col-md-6">
-                <div class="form-group">
-                    <strong>Total penjualan :</strong>
-                    Rp. {{ number_format($penjualan[0]->total_penjualan) }}
-                </div>
-            </div>
-            <div class="col-xs-6 col-sm-6 col-md-6">
-                <div class="form-group">
-                    <strong>Metode Pembayaran :
-                        {{ strtoupper($penjualan[0]->metode_pembayaran) }}
-                    </strong>
-                </div>
-            </div>
-            <div class="col-xs-6 col-sm-6 col-md-6">
-                <div class="form-group">
-                    <strong>Status Pembayaran :
-                        {{ strtoupper($penjualan[0]->status_pembayaran) }}
-                    </strong>
-                </div>
-            </div>
-            <div class="col-xs-6 col-sm-6 col-md-6">
-                <div class="form-group">
-                    <strong>Tercatat :</strong>
-                    {{ $penjualan[0]->created_at }}
+                <div class="pull-right" style="margin-right: 15px;">
+                    <a type="button" class="btn btn-success" onclick="printOut('print_area')" > Cetak</a>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="box">
-                <div class="box-body">
-                  <table id="table_penjualan" class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th>Barang</th>
-                        <th>Kuantitas</th>
-                        <th>Harga Jual</th>
-                        <th>Total</th>
-                        <th>Aksi</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($penjualan as $item)
-                            <tr>
-                                <td>{{$item->nama_barang}}</td>
-                                <td>{{$item->kuantitas}}</td>
-                                <td>Rp. {{number_format($item->harga_jual)}}</td>
-                                <td>Rp. {{number_format($item->kuantitas * $item->harga_jual)}}</td>
-                                <td>
-                                    <a href="{{route('admin.penjualan.edit_item',$item->id_detail_penjualan)}}" class="btn btn-warning">Edit</a>
-                                    <a href="{{route('admin.penjualan.destroy_item',$item->id_detail_penjualan)}}" class="btn btn-danger">Hapus</a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                  </table>
+        
+        <div id="print_area">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <strong>Nama Customer :</strong>
+                        {{ $penjualan[0]->nama_customer }}
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <strong>Tanggal :</strong>
+                        {{ $penjualan[0]->tanggal }}
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <strong>Total penjualan :</strong>
+                        Rp. {{ number_format($penjualan[0]->total_penjualan) }}
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <strong>Metode Pembayaran :
+                            {{ strtoupper($penjualan[0]->metode_pembayaran) }}
+                        </strong>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <strong>Status Pembayaran :
+                            {{ strtoupper($penjualan[0]->status_pembayaran) }}
+                        </strong>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <strong>Tercatat :</strong>
+                        {{ $penjualan[0]->created_at }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="box">
+                    <div class="box-body">
+                      <table id="table_penjualan" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Barang</th>
+                            <th>Kuantitas</th>
+                            <th>Harga Jual</th>
+                            <th>Total</th>
+                            <th class="remove_when_print">Aksi</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($penjualan as $item)
+                                <tr>
+                                    <td>{{$item->nama_barang}}</td>
+                                    <td>{{$item->kuantitas}}</td>
+                                    <td>Rp. {{number_format($item->harga_jual)}}</td>
+                                    <td>Rp. {{number_format($item->kuantitas * $item->harga_jual)}}</td>
+                                    <td class="remove_when_print">
+                                        <a href="{{route('admin.penjualan.edit_item',$item->id_detail_penjualan)}}" class="btn btn-warning">Edit</a>
+                                        <a href="{{route('admin.penjualan.destroy_item',$item->id_detail_penjualan)}}" class="btn btn-danger">Hapus</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                      </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -104,6 +108,18 @@
                 'searching' : false
             ]);
         })
+    </script>
+    <script>
+            function printOut(id) {
+                var printContents = document.getElementById(id).innerHTML;
+                var originalContents = document.body.innerHTML;
+            
+                document.body.innerHTML = printContents;
+                $(".remove_when_print").remove();
+                window.print();
+            
+                document.body.innerHTML = originalContents;
+            }
     </script>
     <script src="{{asset('AdminLTE-2/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('AdminLTE-2/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
