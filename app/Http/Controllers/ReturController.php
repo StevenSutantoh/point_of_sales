@@ -124,7 +124,7 @@ class ReturController extends Controller
             Pembelian::where('id_pembelian',$detail_pembelian->id_pembelian)->update([
                 'total_pembelian' => DB::raw('total_pembelian - '.($detail_pembelian->kuantitas * $detail_pembelian->harga_beli))
             ]);
-            dd($detail_pembelian->harga_beli * $detail_pembelian->kuantitas);
+            // dd($detail_pembelian->harga_beli * $detail_pembelian->kuantitas);
             ReturPembelian::create([
                 'id_supplier' => $detail_pembelian->id_supplier,
                 'id_barang' => $detail_pembelian->id_barang,
