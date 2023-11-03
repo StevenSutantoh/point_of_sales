@@ -53,7 +53,7 @@
                                             @if (in_array($item->id_barang,$arr_id_exist))
                                             Rp. {{number_format($arr_last_price[$item->id_barang])}}
                                             @else 
-                                            Belum terjual
+                                            Belum ada pembelian
                                             @endif
                                         </td>
                                         <td>

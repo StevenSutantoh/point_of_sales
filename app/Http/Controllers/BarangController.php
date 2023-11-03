@@ -78,7 +78,7 @@ class BarangController extends Controller
         }
         $list_jual_terakhir = DetailPenjualan::select('id_barang')->groupBy('id_barang')->get();
         foreach ($list_beli_terakhir as $item) {
-            $total_penjualan = DetailPembelian::where('id_barang',$item->id_barang)->select('kuantitas',DB::raw('kuantitas * harga_beli as total'))->get();
+            $total_penjualan = DetailPenjualan::where('id_barang',$item->id_barang)->select('kuantitas',DB::raw('kuantitas * harga_jual as total'))->get();
             if(count($total_penjualan) > 0){
                 $total = $total_penjualan->sum('total');
                 $jumlah_terjual = $total_penjualan->sum('kuantitas');
