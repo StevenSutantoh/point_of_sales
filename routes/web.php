@@ -13,6 +13,7 @@ use App\Http\Controllers\{
     PembelianController,
     PenjualanController,
     ReportController,
+    ReturController,
 };
 
 use Illuminate\Support\Facades\Route;
@@ -85,6 +86,20 @@ Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], f
     //Laporan
     Route::get('report',[ReportController::class,'index'])->name('report');
     Route::get('report/type={type}',[ReportController::class,'detail'])->name('report_type');
+
+    // Retur
+    Route::get('retur_sales_index',[ReturController::class,'sales_index'])->name('retur_sales_index');
+    Route::get('retur_sales_index/create',[ReturController::class,'sales_create'])->name('retur_sales.create');
+    Route::post('retur_sales/secondPage',[ReturController::class,'sales_2ndPage'])->name('retur_sales.2nd_page');
+    Route::post('retur_sales/thirdPage',[ReturController::class,'sales_3rdPage'])->name('retur_sales.3rd_page');
+    Route::get('retur_sales/confirmRetur/{id}',[ReturController::class,'confirmRetur'])->name('retur_sales.confirm_retur');
+
+    Route::get('retur_purchase_index',[ReturController::class,'purchase_index'])->name('retur_purchase_index');
+    Route::get('retur_purchase_index/create',[ReturController::class,'purchase_create'])->name('retur_purchase.create');
+    Route::post('retur_purchase/secondPage',[ReturController::class,'purchase_2ndPage'])->name('retur_purchase.2nd_page');
+    Route::post('retur_purchase/thirdPage',[ReturController::class,'purchase_3rdPage'])->name('retur_purchase.3rd_page');
+    Route::get('retur_purchase/confirmRetur2/{id}',[ReturController::class,'confirmRetur2'])->name('retur_purchase.confirm_retur');
+
 });
 
 

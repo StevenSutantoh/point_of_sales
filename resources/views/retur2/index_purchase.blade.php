@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','List Retur Penjualan')
+@section('title','List Retur Pembelian')
 
 @section('css') 
   <link rel="stylesheet" href="{{asset('AdminLTE-2/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
@@ -12,23 +12,23 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="row">
-                    <a href="{{route('admin.retur_sales.create')}}" class="btn btn-primary">
-                        Tambah Retur Penjualan
+                    <a href="{{route('admin.retur_purchase.create')}}" class="btn btn-primary">
+                        Tambah Retur Pembelian
                     </a>
                 </div>
                 <div class="row">
                     <div class="box">
                         <div class="box-header">
-                          <h3 class="box-title">Data Retur Penjualan</h3>
+                          <h3 class="box-title">Data Retur Pembelian</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                          <table id="table_retur_penjualan" class="table table-bordered table-striped">
+                          <table id="table_retur_pembelian" class="table table-bordered table-striped">
                             <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Tanggal</th>
-                                <th>Customer</th>
+                                <th>Supplier</th>
                                 <th>Nama Barang</th>
                                 <th>Merk</th>
                                 <th>Size</th>
@@ -38,11 +38,11 @@
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                @foreach ($list_retur_penjualan as $item)
+                                @foreach ($list_retur_pembelian as $item)
                                     <tr>
-                                        <td>{{$item->id_retur_penjualan}}</td>
+                                        <td>{{$item->id_retur_pembelian}}</td>
                                         <td>{{$item->tanggal}}</td>
-                                        <td>{{$item->nama_customer}}</td>
+                                        <td>{{$item->nama_supplier}}</td>
                                         <td>{{$item->nama_barang}}</td>
                                         <td>{{$item->merk}}</td>
                                         <td>{{$item->size}}</td>
@@ -65,7 +65,7 @@
 @section('js')
     <script>
         $(function () {
-            $('#table_retur_penjualan').DataTable()
+            $('#table_retur_pembelian').DataTable()
         })
     </script>
     <script src="{{asset('AdminLTE-2/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
