@@ -84,7 +84,7 @@ Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], f
 
     //Laporan
     Route::get('report',[ReportController::class,'index'])->name('report');
-    Route::get('report/{type}',[ReportController::class,'detail'])->name('report_type');
+    Route::get('report/type={type}',[ReportController::class,'detail'])->name('report_type');
 });
 
 

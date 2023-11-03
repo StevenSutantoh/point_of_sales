@@ -33,6 +33,8 @@
                                 <th>Merk</th>
                                 <th>Size</th>
                                 <th>Harga Beli</th>
+                                <th>Harga Beli Terakhir</th>
+                                <th>Average Price</th>
                                 <th>Aksi</th>
                             </tr>
                             </thead>
@@ -46,7 +48,21 @@
                                         <td>{{$item->stok}}</td>
                                         <td>{{$item->merk}}</td>
                                         <td>{{$item->size}}</td>
-                                        <td>{{$item->harga_jual}}</td>
+                                        <td>Rp. {{number_format($item->harga_jual)}}</td>
+                                        <td>
+                                            @if (in_array($item->id_barang,$arr_id_exist))
+                                            Rp. {{number_format($arr_last_price[$item->id_barang])}}
+                                            @else 
+                                            Belum terjual
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if (in_array($item->id_barang,$arr_id_terjual) && in_array($item->id_barang,$arr_id_exist))
+                                            Rp. {{number_format(($arr_total_price[$item->id_barang] - $arr_terjual[$item->id_barang])/$item->stok)}}
+                                            @else 
+                                            Belum ada pembelian / penjualan
+                                            @endif
+                                        </td>
                                         <td>
                                             <a href="{{route('admin.add_size',$item->nama_barang)}}" class="btn btn-primary">Tambah Size</a>
                                         </td>

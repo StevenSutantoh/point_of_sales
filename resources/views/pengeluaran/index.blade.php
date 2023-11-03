@@ -34,16 +34,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $i = 1; ?>
-                                    @foreach($pengeluaran as $item)
-                                        <tr>
-                                            <td>{{ $item->id_pengeluaran }}</td>
-                                            <td>{{ $item->tanggal }}</td>
-                                            <td>{{ $item->deskripsi }}</td>
-                                            <td>{{ $item->nominal }}</td>
-                                            <td>
-                                                <a href="{{ url('/pengeluaran/' . $item->id_pengeluaran) }}" title="View Pengeluaran"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                                <a href="{{ url('/pengeluaran/' . $item->id_pengeluaran . '/edit') }}" title="Edit Pengeluaran"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                                @foreach($pengeluaran as $item)
+                                    <tr>
+                                        <td>{{ $item->id_pengeluaran }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('Y-m-d') }}</td>
+                                        <td>{{ $item->deskripsi }}</td>
+                                        <td>{{ $item->nominal }}</td>
+                                        <td>
+                                            <a href="{{ url('/pengeluaran/' . $item->id_pengeluaran) }}" title="View Pengeluaran"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                            <a href="{{ url('/pengeluaran/' . $item->id_pengeluaran . '/edit') }}" title="Edit Pengeluaran"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
 
                                                 <form method="POST" action="{{ url('/pengeluaran' . '/' . $item->id_pengeluaran) }}" accept-charset="UTF-8" style="display:inline">
                                                     {{ method_field('DELETE') }}

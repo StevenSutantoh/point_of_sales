@@ -35,16 +35,18 @@ class PembelianController extends Controller
         if (!empty($keyword)) {
             $list_pembelian = Pembelian::
                   join('supplier as s','s.id_supplier','pembelian.id_supplier')
-                ->where('nama', 'LIKE', "%$keyword%")
+                ->where('nama_supplier', 'LIKE', "%$keyword%")
                 ->orWhere('tanggal', 'LIKE', "%$keyword%")
                 ->orWhere('nama_barang', 'LIKE', "%$keyword%")
                 ->orWhere('kuantitas', 'LIKE', "%$keyword%")
                 ->orWhere('harga_jual', 'LIKE', "%$keyword%")
                 ->orWhere('metode_pembayaran', 'LIKE', "%$keyword%")
+                ->select('pembelian.*','s.nama_supplier')
                 ->latest()->paginate($perPage);
             } else {
                 $list_pembelian = Pembelian:: 
                               join('supplier as s','s.id_supplier','pembelian.id_supplier')
+                              ->select('pembelian.*','s.nama_supplier')
                             ->latest('pembelian.created_at')
                             ->paginate($perPage);
         }
@@ -58,7 +60,7 @@ class PembelianController extends Controller
      */
     public function create()
     {
-        $list_supplier = Supplier::orderBy('nama','ASC')->get()->pluck('nama', 'id_supplier');
+        $list_supplier = Supplier::orderBy('nama_supplier','ASC')->get()->pluck('nama_supplier', 'id_supplier');
         $list_barang = Barang::orderBy('nama_barang','ASC')->get();
         $arr = array();
         foreach($list_barang as $barang){

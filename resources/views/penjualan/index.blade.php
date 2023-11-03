@@ -42,7 +42,7 @@
                                     <tr>
                                         <td>{{$item->id_penjualan}}</td>
                                         <td>{{$item->tanggal}}</td>
-                                        <td>{{$item->nama}}</td>
+                                        <td>{{$item->nama_customer}}</td>
                                         <td>Rp. {{number_format($item->total_penjualan)}}</td>
                                         <td class="text-bold">{{strtoupper($item->metode_pembayaran)}}</td>
                                         <td class="text-bold @if($item->status_pembayaran == 'approve') bg-success @else bg-warning @endif">{{strtoupper($item->status_pembayaran)}}</td>

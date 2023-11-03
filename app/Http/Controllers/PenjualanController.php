@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Penjualan;
 use App\Models\DetailPenjualan;
+use App\Models\Pembelian;
+use App\Models\DetailPembelian;
 use App\Models\Barang;
 use App\Models\Customer;
 use Validator;
@@ -35,18 +37,18 @@ class PenjualanController extends Controller
         if (!empty($keyword)) {
             $list_penjualan = Penjualan::
                 join('customer as c','c.id_customer','penjualan.id_customer')
-                ->where('nama', 'LIKE', "%$keyword%")
+                ->where('nama_customer', 'LIKE', "%$keyword%")
                 ->orWhere('tanggal', 'LIKE', "%$keyword%")
                 ->orWhere('nama_barang', 'LIKE', "%$keyword%")
                 ->orWhere('kuantitas', 'LIKE', "%$keyword%")
                 ->orWhere('harga_jual', 'LIKE', "%$keyword%")
                 ->orWhere('metode_pembayaran', 'LIKE', "%$keyword%")
-                ->select('penjualan.*','c.nama')
+                ->select('penjualan.*','c.nama_customer')
                 ->latest()->paginate($perPage);
             } else {
                 $list_penjualan = Penjualan::
                             join('customer as c','c.id_customer','penjualan.id_customer')
-                            ->select('penjualan.*','c.nama')
+                            ->select('penjualan.*','c.nama_customer')
                             ->latest('penjualan.created_at')
                             ->paginate($perPage);
         }
@@ -56,16 +58,53 @@ class PenjualanController extends Controller
 
     public function create()
     {
-        $list_customer = Customer::orderBy('nama','ASC')->get()->pluck('nama', 'id_customer');
+        //Ambil nilai nama_customer dan id_customer utk dijadikan select option 
+        $list_customer = Customer::orderBy('nama_customer','ASC')->get()->pluck('nama_customer', 'id_customer');
+        //Ambil semua list barang
         $list_barang = Barang::orderBy('nama_barang','ASC')->get();
         return view('penjualan.create',compact('list_customer','list_barang'));
     }
 
     public function secondPageCreate(Request $request){
         $data = $request->all();
+        //
         $list_id_barang = explode(',',$data['cart_list']);
         $list_barang = Barang::whereIn('id_barang',$list_id_barang)->orderBy('id_barang','ASC')->get();
-        return view('penjualan.secondPage',compact('data','list_barang'));
+        $arr_last_price = array();
+        $arr_total_price = array();
+        $arr_id_exist = array();
+        $arr_terjual = array();
+        $arr_id_terjual = array();
+        $list_beli_terakhir = 
+        DetailPembelian::select('id_barang', 'id_detail_pembelian','harga_beli' , DB::raw('MAX(created_at)'))
+        ->whereIn('id_barang',$list_id_barang)->groupBy('id_barang')->get();
+        foreach ($list_beli_terakhir as $item) {
+            $arr_last_price[$item->id_barang] = $item->harga_beli;
+            $total_pembelian = DetailPembelian::where('id_barang',$item->id_barang)->select(DB::raw('kuantitas * harga_beli as total'))->get();
+            if(count($total_pembelian) > 0){
+                $total_pembelian = $total_pembelian->sum('total');
+            }
+            else {
+                $total_pembelian = 0;
+            }
+            $arr_total_price[$item->id_barang] = $total_pembelian;
+            array_push($arr_id_exist,$item->id_barang);
+        }
+        $list_jual_terakhir = DetailPenjualan::select('id_barang')->whereIn('id_barang',$list_id_barang)->groupBy('id_barang')->get();
+        foreach ($list_beli_terakhir as $item) {
+            $total_penjualan = DetailPembelian::where('id_barang',$item->id_barang)->select('kuantitas',DB::raw('kuantitas * harga_beli as total'))->get();
+            if(count($total_penjualan) > 0){
+                $total = $total_penjualan->sum('total');
+                $jumlah_terjual = $total_penjualan->sum('kuantitas');
+            }
+            else {
+                $total = 0;
+                $jumlah_terjual = 0;
+            }
+            $arr_terjual[$item->id_barang] = $total;
+            array_push($arr_id_terjual,$item->id_barang);
+        }
+        return view('penjualan.secondPage',compact('data','list_barang','arr_total_price','arr_last_price','arr_id_exist','arr_terjual','arr_id_terjual'));
     }
 
     public function store(Request $request){
@@ -122,7 +161,7 @@ class PenjualanController extends Controller
                         ->join('detail_penjualans as dp','dp.id_penjualan','penjualan.id_penjualan')
                         ->join('customer as c','c.id_customer','penjualan.id_customer')
                         ->join('barang as b','b.id_barang','dp.id_barang')
-                        ->select('penjualan.*','dp.*','c.nama','b.nama_barang','b.merk','b.size')
+                        ->select('penjualan.*','dp.*','c.nama_customer','b.nama_barang','b.merk','b.size')
                         ->get();
         return view('penjualan.show',compact('penjualan'));
     }
@@ -132,7 +171,7 @@ class PenjualanController extends Controller
                         ->join('detail_penjualans as dp','dp.id_penjualan','penjualan.id_penjualan')
                         ->join('customer as c','c.id_customer','penjualan.id_customer')
                         ->join('barang as b','b.id_barang','dp.id_barang')
-                        ->select('penjualan.*','dp.*','c.nama','b.nama_barang','b.merk','b.size')
+                        ->select('penjualan.*','dp.*','c.nama_customer','b.nama_barang','b.merk','b.size')
                         ->get();
         return view('penjualan.show',compact('penjualan'));
     }

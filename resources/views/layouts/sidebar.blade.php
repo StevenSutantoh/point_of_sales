@@ -9,7 +9,7 @@
         </div>
         <div class="pull-left info">
             <span>
-                {{ Auth::user()->name }} <br><br>
+                {{ Auth::user() == null ? '' : Auth::user()->name }} <br><br>
             </span>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>

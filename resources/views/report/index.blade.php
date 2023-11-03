@@ -12,15 +12,15 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="row">
-                    <a href="{{url('admin.report_type','purchase')}}" class="btn btn-primary btn-large">Laporan Pembelian</a>
-                    <a href="{{url('admin.report_type','sales')}}" class="btn btn-success btn-large">Laporan Penjualan</a>
-                    <a href="{{url('admin.report_type','expense')}}" class="btn btn-info btn-large">Laporan Pengeluaran</a>
-                    <a href="{{url('admin.report_type','recap')}}" class="btn btn-warning btn-large">Rekap Laporan</a>
+                    <a href="{{route('admin.report_type','purchase')}}" class="btn btn-primary btn-large">Laporan Pembelian</a>
+                    <a href="{{route('admin.report_type','sales')}}" class="btn btn-success btn-large">Laporan Penjualan</a>
+                    <a href="{{route('admin.report_type','expense')}}" class="btn btn-info btn-large">Laporan Pengeluaran</a>
+                    <a href="{{route('admin.report_type','recap')}}" class="btn btn-warning btn-large">Rekap Laporan</a>
                 </div>
             </div>
         </div>
         <div class="row">
-            @include ('report.detail', ['formMode' => 'edit'])
+            @include ('report.detail')
         </div>
     </div>
 </section>
