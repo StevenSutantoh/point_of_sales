@@ -13,6 +13,8 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Models\DetailPembelian;
+use App\Models\DetailPenjualan;
 
 class BarangController extends Controller
 {
@@ -55,9 +57,42 @@ class BarangController extends Controller
                             ->latest()
                             ->paginate($perPage);
         }
+        $arr_last_price = array();
+        $arr_total_price = array();
+        $arr_id_exist = array();
+        $arr_terjual = array();
+        $arr_id_terjual = array();
+        $list_beli_terakhir = 
+        DetailPembelian::select('id_barang', 'id_detail_pembelian','harga_beli' , DB::raw('MAX(created_at)'))->groupBy('id_barang')->get();
+        foreach ($list_beli_terakhir as $item) {
+            $arr_last_price[$item->id_barang] = $item->harga_beli;
+            $total_pembelian = DetailPembelian::where('id_barang',$item->id_barang)->select(DB::raw('kuantitas * harga_beli as total'))->get();
+            if(count($total_pembelian) > 0){
+                $total_pembelian = $total_pembelian->sum('total');
+            }
+            else {
+                $total_pembelian = 0;
+            }
+            $arr_total_price[$item->id_barang] = $total_pembelian;
+            array_push($arr_id_exist,$item->id_barang);
+        }
+        $list_jual_terakhir = DetailPenjualan::select('id_barang')->groupBy('id_barang')->get();
+        foreach ($list_beli_terakhir as $item) {
+            $total_penjualan = DetailPembelian::where('id_barang',$item->id_barang)->select('kuantitas',DB::raw('kuantitas * harga_beli as total'))->get();
+            if(count($total_penjualan) > 0){
+                $total = $total_penjualan->sum('total');
+                $jumlah_terjual = $total_penjualan->sum('kuantitas');
+            }
+            else {
+                $total = 0;
+                $jumlah_terjual = 0;
+            }
+            $arr_terjual[$item->id_barang] = $total;
+            array_push($arr_id_terjual,$item->id_barang);
+        }
         $list_kategori = Kategori::all();
 
-        return view('barang.index', compact('barang','list_kategori'));
+        return view('barang.index', compact('barang','list_kategori','arr_total_price','arr_last_price','arr_id_exist','arr_terjual','arr_id_terjual'));
     }
 
     public function view_create(){

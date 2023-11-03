@@ -24,7 +24,23 @@
             <?php $i = 1;?>
             @foreach ($list_barang as $item)
             <div class="col-xs-12 col-sm-12 col-md-12">
-                <h3 class="text-bold">Item #{{$i}}</h3>                    
+                <h3 class="text-bold" style="display: inline;">Item #{{$i}}</h3>  
+                <p class="pull-right" style="display: inline;text-align:right;">
+                    Harga Beli Terakhir :
+                    {{
+                        in_array($item->id_barang,$arr_id_exist) ? 
+                        "Rp. ".number_format($arr_last_price[$item->id_barang]) :
+                        "Belum ada pembelian"
+                    }}
+                </p>
+                <p class="pull-right" style="display: inline;margin-right : 15px;text-align:right;">
+                    Harga Rata-rata :
+                    {{
+                        in_array($item->id_barang,$arr_id_terjual) && in_array($item->id_barang,$arr_id_exist) ? 
+                        "Rp ".number_format(($arr_total_price[$item->id_barang] - $arr_terjual[$item->id_barang])/$item->stok) :
+                        "Belum ada pembelian / penjualan"
+                    }}
+                </p>
             </div>
                 <input type="hidden" name="ids[]" value="{{$item->id_barang}}">
                 <div class="col-xs-12 col-sm-12 col-md-12">
