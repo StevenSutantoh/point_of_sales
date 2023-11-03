@@ -31,7 +31,7 @@
                             <select class="form-control" style="width: 100%;" name="id_supplier" id="id_supplier">
                                 <option selected="selected" value="0">Pilih Supplier Barang</option>
                                 @foreach ($list_supplier as $item)
-                                    <option value="{{$item->id_supplier}}">{{$item->nama}}</option>
+                                    <option value="{{$item->id_supplier}}">{{$item->nama_supplier}}</option>
                                 @endforeach
                             </select>
                         </div>
