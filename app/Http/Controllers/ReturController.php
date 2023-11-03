@@ -61,6 +61,7 @@ class ReturController extends Controller
                 'id_barang' => $detail_penjualan->id_barang,
                 'tanggal' => $detail_penjualan->tanggal,
                 'kuantitas' => $detail_penjualan->kuantitas,
+                'harga' => $detail_penjualan->harga,
                 'total' => $detail_penjualan->harga_jual * $detail_penjualan->kuantitas,
             ]);
             DB::commit();
@@ -123,11 +124,13 @@ class ReturController extends Controller
             Pembelian::where('id_pembelian',$detail_pembelian->id_pembelian)->update([
                 'total_pembelian' => DB::raw('total_pembelian - '.($detail_pembelian->kuantitas * $detail_pembelian->harga_beli))
             ]);
+            // dd($detail_pembelian->harga_beli * $detail_pembelian->kuantitas);
             ReturPembelian::create([
                 'id_supplier' => $detail_pembelian->id_supplier,
                 'id_barang' => $detail_pembelian->id_barang,
                 'tanggal' => $detail_pembelian->tanggal,
                 'kuantitas' => $detail_pembelian->kuantitas,
+                'harga' => $detail_pembelian->harga_beli,
                 'total' => $detail_pembelian->harga_beli * $detail_pembelian->kuantitas,
             ]);
             DB::commit();

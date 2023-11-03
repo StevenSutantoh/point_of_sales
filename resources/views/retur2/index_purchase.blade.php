@@ -46,7 +46,7 @@
                                         <td>{{$item->nama_barang}}</td>
                                         <td>{{$item->merk}}</td>
                                         <td>{{$item->size}}</td>
-                                        <td>Rp. {{number_format($item->harga)}}</td>
+                                        <td>Rp. {{number_format($item->total)}}</td>
                                         <td>{{$item->created_at}}</td>
                                     </tr>
                                     <?php $i++; ?>
