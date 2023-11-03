@@ -12,5 +12,5 @@ class Pengeluaran extends Model
     protected $table = 'pengeluaran';
     protected $primaryKey = 'id_pengeluaran';
     protected $guarded = [];
-    protected $fillable = ['deskripsi', 'nominal'];
+    protected $fillable = ['tanggal', 'deskripsi', 'nominal'];
 }

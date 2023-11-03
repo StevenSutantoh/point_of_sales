@@ -34,7 +34,7 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>Rp. </h3><br>
+              <h3>Rp. {{number_format($total->sum('total_penjualan'))}} </h3><br>
 
               <p>Total Penjualan</p>
             </div>
