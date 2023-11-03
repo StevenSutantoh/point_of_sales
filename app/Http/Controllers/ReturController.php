@@ -49,7 +49,7 @@ class ReturController extends Controller
             $detail_penjualan = DetailPenjualan::where('id_detail_penjualan',$id)
                                 ->join('penjualan as p','p.id_penjualan','detail_penjualans.id_penjualan')
                                 ->first();
-            dd($detail_penjualan);
+            // dd($detail_penjualan);
             Barang::where('id_barang',$detail_penjualan->id_barang)->update([
                 'stok' => DB::raw('stok + '.$detail_penjualan->kuantitas)
             ]);
