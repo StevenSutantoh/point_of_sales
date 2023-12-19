@@ -34,7 +34,7 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>Rp. {{number_format($total->sum('total_penjualan'))}} </h3><br>
+              <h3>Rp.  </h3><br>
 
               <p>Total Penjualan</p>
             </div>
@@ -51,7 +51,7 @@
             <div class="inner">
               <h3>{{ Auth::user() == null ? '' : Auth::user()->name }}</h3><br>
 
-              <p>User Status</p>
+              <p>Status User</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
@@ -66,7 +66,7 @@
             <div class="inner">
               <h3>Rp. </h3><br>
 
-              <p>Total Pengeluaran</p>
+              <p>Total Pengeluaran Dana</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
